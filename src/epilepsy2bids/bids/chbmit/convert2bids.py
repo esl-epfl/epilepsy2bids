@@ -1,4 +1,4 @@
-import glob
+from importlib import resources as impresources
 import os
 from pathlib import Path
 import shutil
@@ -6,15 +6,17 @@ from string import Template
 
 import pandas as pd
 
-import dataIo
-from dataIo.eeg import Eeg
-from dataIo.load_annotations.load_annotations_chb import loadAnnotationsFromEdf
+from ... import bids
+from ...eeg import Eeg
+from ...load_annotations.chbmit import loadAnnotationsFromEdf
 
-# TODO switch to Path
-BIDS_DIR = os.path.join(os.path.dirname(dataIo.__file__), "bids")
+BIDS_DIR = impresources.files(bids)
+DATASET = BIDS_DIR / "chbmit"
 
 
 def convert(root: Path, outDir: Path):
+    root = Path(root)
+    outDir = Path(outDir)
     subjects = []
     for _, directory, _ in os.walk(root):
         for subject in directory:
@@ -33,27 +35,31 @@ def convert(root: Path, outDir: Path):
         outPath = outDir / f"sub-{subject}" / f"ses-{session}" / "eeg"
         os.makedirs(outPath, exist_ok=True)
 
-        edfFiles = sorted(glob.glob(root / folder / "*.edf"))
+        edfFiles = sorted((root / folder).glob("*.edf"))
         for fileIndex, edfFile in enumerate(edfFiles):
             edfBaseName = (
                 outPath
                 / f"sub-{subject}_ses-{session}_task-{task}_run-{fileIndex:02}_eeg"
             )
-            edfFileName = edfBaseName + ".edf"
+            edfFileName = edfBaseName.with_suffix(".edf")
             # Load EEG and standardize it
             if os.path.basename(edfFile) not in (
                 "chb12_27.edf",
                 "chb12_28.edf",
                 "chb12_29.edf",
             ):
-                eeg = Eeg.loadEdf(edfFile, Eeg.Montage.BIPOLAR, Eeg.BIPOLAR_DBANANA)
+                eeg = Eeg.loadEdf(
+                    edfFile.as_posix(), Eeg.Montage.BIPOLAR, Eeg.BIPOLAR_DBANANA
+                )
                 eeg.standardize(256, Eeg.BIPOLAR_DBANANA, "bipolar")
             else:
-                eeg = Eeg.loadEdf(edfFile, Eeg.Montage.UNIPOLAR, Eeg.ELECTRODES_10_20)
+                eeg = Eeg.loadEdf(
+                    edfFile.as_posix(), Eeg.Montage.UNIPOLAR, Eeg.ELECTRODES_10_20
+                )
                 eeg.standardize(256, Eeg.ELECTRODES_10_20, "bipolar")
 
             # Save EEG
-            eeg.saveEdf(edfFileName)
+            eeg.saveEdf(edfFileName.as_posix())
 
             # Save JSON sidecar
             eegJsonDict = {
@@ -63,24 +69,24 @@ def convert(root: Path, outDir: Path):
                 "task": task,
             }
 
-            with open(BIDS_DIR / "chbmit" / "eeg.json", "r") as f:
+            with open(DATASET / "eeg.json", "r") as f:
                 src = Template(f.read())
                 eegJsonSidecar = src.substitute(eegJsonDict)
-            with open(edfBaseName + ".json", "w") as f:
+            with open(edfBaseName.with_suffix(".json"), "w") as f:
                 f.write(eegJsonSidecar)
 
             # Load annotation
-            annotations = loadAnnotationsFromEdf(edfFile)
-            annotations.saveTsv(edfBaseName[:-4] + "_events.tsv")
+            annotations = loadAnnotationsFromEdf(edfFile.as_posix())
+            annotations.saveTsv(edfBaseName.as_posix()[:-4] + "_events.tsv")
 
     # Build participant metadata
     subjectInfo = pd.read_csv(
         root / "SUBJECT-INFO", delimiter="\t", skip_blank_lines=True
     )
     participants = {"participant_id": [], "age": [], "sex": [], "comment": []}
-    for folder in glob.iglob(outDir / "sub-*"):
+    for folder in outDir.glob("sub-*"):
         subject = os.path.split(folder)[-1]
-        originalSubjectName = "chb{}".format(subject[4:6])
+        originalSubjectName = f"chb{subject[4:6]}"
         if originalSubjectName in subjectInfo.Case.values:
             participants["participant_id"].append(subject)
             participants["age"].append(
@@ -107,15 +113,15 @@ def convert(root: Path, outDir: Path):
     participantsDf = pd.DataFrame(participants)
     participantsDf.sort_values(by=["participant_id"], inplace=True)
     participantsDf.to_csv(outDir / "participants.tsv", sep="\t", index=False)
-    participantsJsonFileName = BIDS_DIR / "chbmit" / "participants.json"
+    participantsJsonFileName = DATASET / "participants.json"
     shutil.copy(participantsJsonFileName, outDir)
 
     # Copy Readme file
-    readmeFileName = BIDS_DIR / "chbmit" / "README.md"
+    readmeFileName = DATASET / "README.md"
     shutil.copyfile(readmeFileName, outDir / "README")
 
     # Copy dataset description
-    descriptionFileName = BIDS_DIR / "chbmit" / "dataset_description.json"
+    descriptionFileName = DATASET / "dataset_description.json"
     shutil.copy(descriptionFileName, outDir)
 
     # Copy Events JSON Sidecar

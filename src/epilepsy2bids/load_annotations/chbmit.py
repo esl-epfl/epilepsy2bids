@@ -4,7 +4,7 @@ import re
 
 import pyedflib
 
-from dataIo.annotations import Annotation, Annotations, EventType, SeizureType
+from ..annotations import Annotation, Annotations, EventType, SeizureType
 
 
 def _parseTimeStamp(string: str) -> float:

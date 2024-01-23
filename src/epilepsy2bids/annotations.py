@@ -1,19 +1,18 @@
 from datetime import datetime
 import enum
+from importlib import resources as impresources
 import json
-import os
-from pkgutil import extend_path
 from typing import TypedDict
 
 import numpy as np
 import pandas as pd
 
-import dataIo
+from . import bids
 
 # Load Seizure types defined in the HED-SCORE JSON event file
-PCKG_LOC = os.path.dirname(dataIo.__file__)
+BIDS_LOC = impresources.files(bids)
 szTypes = dict()
-with open(os.path.join(PCKG_LOC, "bids", "events.json"), "r") as f:
+with open(BIDS_LOC / "events.json", "r") as f:
     eventsJSON = json.load(f)
     szTypes = eventsJSON["Levels"]
 
@@ -50,22 +49,24 @@ class Annotations:
         annotations = cls()
         for _, row in df.iterrows():
             annotation = Annotation()
-            annotation['onset'] = float(row['onset'])
-            annotation['duration'] = float(row['duration'])
-            annotation['eventType'] = EventType[row['eventType']]
-            if row['confidence']:
-                annotation['confidence'] = "n/a"
+            annotation["onset"] = float(row["onset"])
+            annotation["duration"] = float(row["duration"])
+            annotation["eventType"] = EventType[row["eventType"]]
+            if row["confidence"]:
+                annotation["confidence"] = "n/a"
             else:
-                annotation['confidence'] = float(row['confidence'])
-            print(row['channels'])
-            if row['channels']:
-                annotation['channels'] = "n/a"
-            elif "," in row['channels']:
-                annotation['channels'] = row['channels'].split(",")
+                annotation["confidence"] = float(row["confidence"])
+            print(row["channels"])
+            if row["channels"]:
+                annotation["channels"] = "n/a"
+            elif "," in row["channels"]:
+                annotation["channels"] = row["channels"].split(",")
             else:
-                annotation['channels'] = [row['channels']]
-            annotation['dateTime'] = datetime.strptime(row['dateTime'], "%Y-%m-%d %H:%M:%S")
-            annotation['recordingDuration'] = float(row['recordingDuration'])
+                annotation["channels"] = [row["channels"]]
+            annotation["dateTime"] = datetime.strptime(
+                row["dateTime"], "%Y-%m-%d %H:%M:%S"
+            )
+            annotation["recordingDuration"] = float(row["recordingDuration"])
             annotations.events.append(annotation)
 
         return annotations
@@ -89,25 +90,25 @@ class Annotations:
         return mask
 
     def saveTsv(self, filename: str):
-        with open(filename, 'w') as f:
-            line = '\t'.join(list(Annotation.__annotations__.keys()))
-            line += '\n'
+        with open(filename, "w") as f:
+            line = "\t".join(list(Annotation.__annotations__.keys()))
+            line += "\n"
             f.write(line)
             for event in self.events:
-                line = ''
-                line += '{:.2f}\t'.format(event["onset"])
-                line += '{:.2f}\t'.format(event["duration"])
-                line += '{}\t'.format(event["eventType"].value)
+                line = ""
+                line += "{:.2f}\t".format(event["onset"])
+                line += "{:.2f}\t".format(event["duration"])
+                line += "{}\t".format(event["eventType"].value)
                 if isinstance(event["confidence"], (int, float)):
-                    line += '{:.2f}\t'.format(event["confidence"])
+                    line += "{:.2f}\t".format(event["confidence"])
                 else:
-                    line += '{}\t'.format(event["confidence"])
+                    line += "{}\t".format(event["confidence"])
                 if isinstance(event["channels"], (list, tuple)):
-                    line += ','.join(event["channels"])
-                    line += '\t'
+                    line += ",".join(event["channels"])
+                    line += "\t"
                 else:
-                    line += '{}\t'.format(event["channels"])
-                line += '{}\t'.format(event["dateTime"].strftime("%Y-%m-%d %H:%M:%S"))
-                line += '{:.2f}'.format(event["recordingDuration"])
-                line += '\n'
+                    line += "{}\t".format(event["channels"])
+                line += "{}\t".format(event["dateTime"].strftime("%Y-%m-%d %H:%M:%S"))
+                line += "{:.2f}".format(event["recordingDuration"])
+                line += "\n"
                 f.write(line)

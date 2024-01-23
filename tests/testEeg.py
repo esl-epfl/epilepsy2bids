@@ -10,22 +10,22 @@ class TestDataLoading(unittest.TestCase):
     def test_loadEdf(self):
         fileConfigurations = [
             {  # CHB-MIT
-                "fileName": "dataIo/test/chb01_01_sample.edf",
+                "fileName": "tests/chb01_01_sample.edf",
                 "montage": Eeg.Montage.BIPOLAR,
                 "electrodes": Eeg.BIPOLAR_DBANANA,
             },
             {  # TUH
-                "fileName": "dataIo/test/aaaaaaac_s001_t000_sample.edf",
+                "fileName": "tests/aaaaaaac_s001_t000_sample.edf",
                 "montage": Eeg.Montage.UNIPOLAR,
                 "electrodes": Eeg.ELECTRODES_10_20,
             },
             {  # Siena
-                "fileName": "dataIo/test/PN00-5_sample.edf",
+                "fileName": "tests/PN00-5_sample.edf",
                 "montage": Eeg.Montage.UNIPOLAR,
                 "electrodes": Eeg.ELECTRODES_10_20,
             },
             {  # SeizeIT
-                "fileName": "dataIo/test/P_ID10_r5_sample.edf",
+                "fileName": "tests/P_ID10_r5_sample.edf",
                 "montage": Eeg.Montage.UNIPOLAR,
                 "electrodes": Eeg.ELECTRODES_10_20,
             },
@@ -42,7 +42,7 @@ class TestDataLoading(unittest.TestCase):
 
     def test_resampling(self):
         fileConfig = {  # Siena
-            "fileName": "dataIo/test/PN00-5_sample.edf",
+            "fileName": "tests/PN00-5_sample.edf",
             "montage": Eeg.Montage.UNIPOLAR,
             "electrodes": Eeg.ELECTRODES_10_20,
         }
@@ -59,7 +59,7 @@ class TestDataLoading(unittest.TestCase):
 
     def test_reReference(self):
         fileConfig = {  # Siena
-            "fileName": "dataIo/test/PN00-5_sample.edf",
+            "fileName": "tests/PN00-5_sample.edf",
             "montage": Eeg.Montage.UNIPOLAR,
             "electrodes": Eeg.ELECTRODES_10_20,
         }
@@ -74,7 +74,7 @@ class TestDataLoading(unittest.TestCase):
 
     def test_saveEdf(self):
         fileConfig = {  # Siena
-            "fileName": "dataIo/test/PN00-5_sample.edf",
+            "fileName": "tests/PN00-5_sample.edf",
             "montage": Eeg.Montage.UNIPOLAR,
             "electrodes": Eeg.ELECTRODES_10_20,
         }
@@ -87,7 +87,7 @@ class TestDataLoading(unittest.TestCase):
 
     def test_savecsv(self):
         fileConfig = {  # Siena
-            "fileName": "dataIo/test/PN00-5_sample.edf",
+            "fileName": "tests/PN00-5_sample.edf",
             "montage": Eeg.Montage.UNIPOLAR,
             "electrodes": Eeg.ELECTRODES_10_20,
         }

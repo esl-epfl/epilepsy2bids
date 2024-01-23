@@ -18,20 +18,21 @@ def makeSample(input: str, duration: int = DURATION) -> None:
 
     # Keep only short duration of white noise
     for i in range(len(signals)):
-        signals[i] = np.random.rand(int(duration * signal_headers[i]['sample_rate'])) * AMPLITUDE
+        signals[i] = (
+            np.random.rand(int(duration * signal_headers[i]["sample_rate"])) * AMPLITUDE
+        )
 
-    outFilename = input[:-4] + '_sample.edf'
+    outFilename = input[:-4] + "_sample.edf"
     highlevel.write_edf(outFilename, signals, signal_headers, header)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog='Shrink an EDF to a sample two seconds long',
+        prog="Shrink an EDF to a sample two seconds long",
         description="Shrinks an EDF to a sample. The recording header and list of signals are kept the same. "
-                    "The content of data is white noise. The output file is named input_sample.edf"
+        "The content of data is white noise. The output file is named input_sample.edf",
     )
-    parser.add_argument('input',
-                        help="input edf file.")
+    parser.add_argument("input", help="input edf file.")
 
     args = parser.parse_args()
     makeSample(args.input, DURATION)
