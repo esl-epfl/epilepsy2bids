@@ -1,0 +1,21 @@
+{
+    "EEGReference": "Common Average",
+    "SamplingFrequency": $fs,
+    "PowerLineFrequency": 50,
+    "SoftwareFilters": {
+      "high-pass filter": {"half-amplitude cutoff (Hz)": 1.591549},
+      "low-pass filter": {"half-amplitude cutoff (Hz)": 30},
+      "notch filter": {"half-amplitude cutoff (Hz)": 50}
+    },
+
+    "EEGChannelCount": $channels,
+    "EEGPlacementScheme": "10-20",
+    "HardwareFilters": "n/a",
+    "RecordingType": "discontinuous",
+    "RecordingDuration": $duration,
+
+    "TaskName": "$task",
+    "TaskDescription": "Subjects were monitored with a Video-EEG at the Unit of Neurology and Neurophysiology of the University of Siena.",
+    "InstitutionName": "University of Siena"
+  }
+  

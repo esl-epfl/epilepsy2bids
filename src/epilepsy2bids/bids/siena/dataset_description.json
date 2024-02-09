@@ -1,0 +1,13 @@
+{
+  "Name": "BIDS Siena Scalp EEG Database",
+  "BIDSVersion": "1.8.0",
+  "HEDVersion": "8.2.0",
+  "DatasetType": "raw",
+  "License": "Open Data Commons Attribution License v1.0",
+  "Authors": [
+    "Jonathan Dan",
+    "Paolo Detti"
+  ],
+  "HowToAcknowledge": "Paolo Detti. Siena Scalp EEG Database (version 1.0.0). PhysioNet. 2020.",
+  "DatasetDOI": "doi:10.13026/5d4a-j060"
+}
