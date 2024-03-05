@@ -1,0 +1,14 @@
+{
+    "Name": "BIDS SeizeIT",
+    "BIDSVersion": "1.8.0",
+    "HEDVersion": "8.2.0",
+    "DatasetType": "raw",
+    "License": "Custom KU Leuven",
+    "Authors": [
+      "Jonathan Dan",
+      "Christos Chatzichristos"
+    ],
+    "HowToAcknowledge": "Christos Chatzichristos et al. SeizeIT1, KU Leuven RDR, V1. 2023",
+    "DatasetDOI": "doi:10.48804/P5Q0OJ"
+  }
+  

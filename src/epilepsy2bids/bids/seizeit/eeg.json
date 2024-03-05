@@ -1,0 +1,17 @@
+{
+    "EEGReference": "Common Average",
+    "SamplingFrequency": $fs,
+    "PowerLineFrequency": 50,
+    "SoftwareFilters": "n/a",
+
+    "EEGChannelCount": $channels,
+    "EEGPlacementScheme": "10-20",
+    "HardwareFilters": "n/a",
+    "RecordingType": "discontinuous",
+    "RecordingDuration": $duration,
+
+    "TaskName": "$task",
+    "TaskDescription": "Subjects were monitored with a Video-EEG at the Gasthuisberg, KU Leuven, Belgium.",
+    "InstitutionName": "Gasthuisberg KU Leuven"
+  }
+  
