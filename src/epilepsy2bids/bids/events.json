@@ -10,7 +10,7 @@
         "HED": {
                 "bckg": "Continuous-background-activity",
                 "sz": "Unclassified-epileptic-seizure",
-                "sz_foc:": "Awareness-unknown-focal-onset-epileptic-seizure",
+                "sz_foc": "Awareness-unknown-focal-onset-epileptic-seizure",
                 "sz_foc_a": "Aware-focal-onset-epileptic-seizure",
                 "sz_foc_a_m": "Aware-focal-onset-epileptic-seizure, Motor-seizure",
                 "sz_foc_a_m_automatisms": "Aware-focal-onset-epileptic-seizure, Automatism-motor-seizure",
@@ -84,7 +84,7 @@
         "Levels": {
             "bckg": "Refers to an epoch of data that does not contain an epileptic seizure.",
             "sz": "Referring to a seizure type that cannot be described by the ILAE 2017 classification either because of inadequate information or unusual clinical features.",
-            "sz_foc:": "Focal seizure with unknown or unreported awareness",
+            "sz_foc": "Focal seizure with unknown or unreported awareness",
             "sz_foc_a": "Focal aware seizure",
             "sz_foc_a_m": "Focal aware motor seizure",
             "sz_foc_a_m_automatisms": "Focal aware motor seizure with automatisms (more or less coordinated, purposeless, repetitive motor activity)",
