@@ -11,7 +11,7 @@ from ..eeg import Eeg
 
 
 def _loadSeizures(edfFile: str) -> tuple[list[tuple], list[SeizureType], list[list[str]], list]:
-    """Load seizures from a Siena Seizures-list-Pxx.txt file
+    """Load seizures from a seizeIT .tsv file
 
     Args:
         edfFile (str): full path to the EDF for which annotations should be extracted.

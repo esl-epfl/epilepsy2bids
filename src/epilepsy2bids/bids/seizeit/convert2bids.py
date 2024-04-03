@@ -17,48 +17,48 @@ DATASET = BIDS_DIR / "seizeit"
 def convert(root: Path, outDir: Path):
     root = Path(root)
     outDir = Path(outDir)
-    # for folder in root.glob("P_ID*"):
-    #     print(folder)
-    #     # Extract subject & session ID
-    #     subject = folder.name[-2:]
-    #     session = "01"
-    #     task = "szMonitoring"
+    for folder in root.glob("P_ID*"):
+        print(folder)
+        # Extract subject & session ID
+        subject = folder.name[-2:]
+        session = "01"
+        task = "szMonitoring"
 
-    #     # Create BIDS hierarchy
-    #     outPath = outDir / f"sub-{subject}" / f"ses-{session}" / "eeg"
-    #     os.makedirs(outPath, exist_ok=True)
+        # Create BIDS hierarchy
+        outPath = outDir / f"sub-{subject}" / f"ses-{session}" / "eeg"
+        os.makedirs(outPath, exist_ok=True)
 
-    #     edfFiles = sorted((root / folder).glob("*.edf"))
-    #     for fileIndex, edfFile in enumerate(edfFiles):
-    #         edfBaseName = (
-    #             outPath
-    #             / f"sub-{subject}_ses-{session}_task-{task}_run-{fileIndex:02}_eeg"
-    #         )
-    #         edfFileName = edfBaseName.with_suffix(".edf")
-    #         # Load EEG and standardize it
-    #         eeg = Eeg.loadEdf(edfFile.as_posix(), Eeg.Montage.UNIPOLAR, Eeg.ELECTRODES_10_20)
-    #         eeg.standardize(256, Eeg.ELECTRODES_10_20, "Avg")
+        edfFiles = sorted((root / folder).glob("*.edf"))
+        for fileIndex, edfFile in enumerate(edfFiles):
+            edfBaseName = (
+                outPath
+                / f"sub-{subject}_ses-{session}_task-{task}_run-{fileIndex:02}_eeg"
+            )
+            edfFileName = edfBaseName.with_suffix(".edf")
+            # Load EEG and standardize it
+            eeg = Eeg.loadEdf(edfFile.as_posix(), Eeg.Montage.UNIPOLAR, Eeg.ELECTRODES_10_20)
+            eeg.standardize(256, Eeg.ELECTRODES_10_20, "Avg")
 
-    #         # Save EEG
-    #         eeg.saveEdf(edfFileName.as_posix())
+            # Save EEG
+            eeg.saveEdf(edfFileName.as_posix())
 
-    #         # Save JSON sidecar
-    #         eegJsonDict = {
-    #             "fs": f"{eeg.fs:d}",
-    #             "channels": f"{eeg.data.shape[0]}",
-    #             "duration": f"{(eeg.data.shape[1] / eeg.fs):.2f}",
-    #             "task": task,
-    #         }
+            # Save JSON sidecar
+            eegJsonDict = {
+                "fs": f"{eeg.fs:d}",
+                "channels": f"{eeg.data.shape[0]}",
+                "duration": f"{(eeg.data.shape[1] / eeg.fs):.2f}",
+                "task": task,
+            }
 
-    #         with open(DATASET / "eeg.json", "r") as f:
-    #             src = Template(f.read())
-    #             eegJsonSidecar = src.substitute(eegJsonDict)
-    #         with open(edfBaseName.with_suffix(".json"), "w") as f:
-    #             f.write(eegJsonSidecar)
+            with open(DATASET / "eeg.json", "r") as f:
+                src = Template(f.read())
+                eegJsonSidecar = src.substitute(eegJsonDict)
+            with open(edfBaseName.with_suffix(".json"), "w") as f:
+                f.write(eegJsonSidecar)
 
-    #         # Load annotation
-    #         annotations = loadAnnotationsFromEdf(edfFile.as_posix())
-    #         annotations.saveTsv(edfBaseName.as_posix()[:-4] + "_events.tsv")
+            # Load annotation
+            annotations = loadAnnotationsFromEdf(edfFile.as_posix())
+            annotations.saveTsv(edfBaseName.as_posix()[:-4] + "_events.tsv")
 
     # Build participant metadata
     participants = {"participant_id": [], "age": [], "sex": []}
