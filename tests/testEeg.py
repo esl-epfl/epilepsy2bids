@@ -1,5 +1,4 @@
-""" Eeg class unit testing
-"""
+"""Eeg class unit testing"""
 
 import unittest
 

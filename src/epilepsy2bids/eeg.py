@@ -1,4 +1,5 @@
 """Eeg class to manipulate EEG data and associated metadata. The class interfaces with EDF files."""
+
 import datetime
 import enum
 import os

@@ -75,7 +75,7 @@ def convert(root: Path, outDir: Path):
                         "task": task,
                         "split": subset,
                         "subject": subjectFolder.name,
-                        "session": sessionFolder.name
+                        "session": sessionFolder.name,
                     }
 
                     with open(DATASET / "eeg.json", "r") as f:
@@ -94,7 +94,9 @@ def convert(root: Path, outDir: Path):
             subject = os.path.split(folder)[-1]
             participants["participant_id"].append(subject)
             subject = subject[4:]
-            tuhId = list(subjectIdPairs.keys())[[x["subject"] for x in subjectIdPairs.values()].index(subject)]
+            tuhId = list(subjectIdPairs.keys())[
+                [x["subject"] for x in subjectIdPairs.values()].index(subject)
+            ]
             participants["TUH_id"].append(tuhId)
             participants["split"].append(subjectIdPairs[tuhId]["subset"])
 

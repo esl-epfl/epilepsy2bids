@@ -30,7 +30,9 @@ EventType = enum.Enum("EventType", EVENT_TYPES)
 
 
 class Annotation(TypedDict):
-    onset: float  # start time of the event from the beginning of the recording, in seconds
+    onset: (
+        float  # start time of the event from the beginning of the recording, in seconds
+    )
     duration: float  # duration of the event, in seconds
     eventType: EventType  # type of the event
     confidence: float  # confidence in the event label. Values are in the range [0–1]

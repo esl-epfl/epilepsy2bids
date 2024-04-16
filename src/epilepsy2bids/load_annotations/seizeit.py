@@ -1,4 +1,5 @@
 """load annotations from the SeizeIT dataset https://doi.org/10.48804/P5Q0OJ to a Annotations object."""
+
 import os
 from pathlib import Path
 import re
@@ -10,7 +11,9 @@ from ..annotations import Annotation, Annotations, EventType, SeizureType
 from ..eeg import Eeg
 
 
-def _loadSeizures(edfFile: str) -> tuple[list[tuple], list[SeizureType], list[list[str]], list]:
+def _loadSeizures(
+    edfFile: str,
+) -> tuple[list[tuple], list[SeizureType], list[list[str]], list]:
     """Load seizures from a seizeIT .tsv file
 
     Args:
@@ -30,31 +33,36 @@ def _loadSeizures(edfFile: str) -> tuple[list[tuple], list[SeizureType], list[li
     confidence = []
     channels = []
     tsvFile = Path(os.path.dirname(edfFile)) / (Path(edfFile).stem + "_a1.tsv")
-    annotations = pd.read_csv(tsvFile, comment="#", delimiter='\t', names=['start', 'stop', 'type', 'comments'])
+    annotations = pd.read_csv(
+        tsvFile,
+        comment="#",
+        delimiter="\t",
+        names=["start", "stop", "type", "comments"],
+    )
     for _, row in annotations.iterrows():
         # Seizure Timing
-        if row['stop'] is not None:
-            seizures.append((row['start'], row['stop']))
+        if row["stop"] is not None:
+            seizures.append((row["start"], row["stop"]))
             confidence.append("n/a")
         # 12 weizures do not mark the end time, consider a default seizure time of 30 seconds
         else:
-            seizures.append((row['start'], row['start'] + 30))
+            seizures.append((row["start"], row["start"] + 30))
             confidence.append(0.5)
 
         # Seizure Type
-        seizureType = row['type']
-        if seizureType == 'FIA':
+        seizureType = row["type"]
+        if seizureType == "FIA":
             seizureType = SeizureType.sz_foc_ia
-        elif seizureType == 'FA':
+        elif seizureType == "FA":
             seizureType = SeizureType.sz_foc_a
-        elif seizureType == 'F-BTC':
+        elif seizureType == "F-BTC":
             seizureType = SeizureType.sz_foc_f2b
         else:
             raise ValueError(f"Unknown seizure type ({seizureType}) for Siena dataset.")
         types.append(seizureType)
 
         # Seizure localization
-        channels.append(_getChannels(row['comments']))
+        channels.append(_getChannels(row["comments"]))
 
     return seizures, types, confidence, channels
 
@@ -71,8 +79,8 @@ def _getChannels(descriptor: str) -> list[str]:
     Returns:
         channels: List of electrodes names from the 10-20 system associated associated with a seizure.
     """
-    localization = descriptor.split(', ')[1].split(':')[1].lower()
-    lateralization = descriptor.split(', ')[0].split(':')[1]
+    localization = descriptor.split(", ")[1].split(":")[1].lower()
+    lateralization = descriptor.split(", ")[0].split(":")[1]
     channels = Eeg.ELECTRODES_10_20
     r = list()
     if "temp" in localization:  # Temporal
@@ -102,7 +110,9 @@ def _getChannels(descriptor: str) -> list[str]:
         case "NC":
             r = None
         case _:
-            raise ValueError(f"Unknown lateralization for SeizeIT dataset: {lateralization}.")
+            raise ValueError(
+                f"Unknown lateralization for SeizeIT dataset: {lateralization}."
+            )
     if r is not None:
         channels = list(filter(r.match, channels))
     else:

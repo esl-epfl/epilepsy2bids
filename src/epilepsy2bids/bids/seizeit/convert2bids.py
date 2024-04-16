@@ -36,7 +36,9 @@ def convert(root: Path, outDir: Path):
             )
             edfFileName = edfBaseName.with_suffix(".edf")
             # Load EEG and standardize it
-            eeg = Eeg.loadEdf(edfFile.as_posix(), Eeg.Montage.UNIPOLAR, Eeg.ELECTRODES_10_20)
+            eeg = Eeg.loadEdf(
+                edfFile.as_posix(), Eeg.Montage.UNIPOLAR, Eeg.ELECTRODES_10_20
+            )
             eeg.standardize(256, Eeg.ELECTRODES_10_20, "Avg")
 
             # Save EEG
@@ -67,10 +69,10 @@ def convert(root: Path, outDir: Path):
         originalSubjectName = f"P_ID{subject[-2:]}"
         # Get information from header in one of the metadata files
         annotationFile = next((root / originalSubjectName).glob("*_a1.tsv"), None)
-        with open(annotationFile, 'r') as f:
+        with open(annotationFile, "r") as f:
             lines = f.readlines()
-            age = int(lines[4].split(': ')[-1])
-            sex = lines[3].split(': ')[-1][0].lower()
+            age = int(lines[4].split(": ")[-1])
+            sex = lines[3].split(": ")[-1][0].lower()
         participants["participant_id"].append(subject)
         participants["age"].append(age)
         participants["sex"].append(sex)

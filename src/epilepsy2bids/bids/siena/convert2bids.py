@@ -36,7 +36,9 @@ def convert(root: Path, outDir: Path):
             )
             edfFileName = edfBaseName.with_suffix(".edf")
             # Load EEG and standardize it
-            eeg = Eeg.loadEdf(edfFile.as_posix(), Eeg.Montage.UNIPOLAR, Eeg.ELECTRODES_10_20)
+            eeg = Eeg.loadEdf(
+                edfFile.as_posix(), Eeg.Montage.UNIPOLAR, Eeg.ELECTRODES_10_20
+            )
             eeg.standardize(256, Eeg.ELECTRODES_10_20, "Avg")
 
             # Save EEG
@@ -74,7 +76,8 @@ def convert(root: Path, outDir: Path):
                 ].values[0]
             )
             participants["sex"].append(
-                subjectInfo[subjectInfo.patient_id == originalSubjectName][" gender"].values[0]
+                subjectInfo[subjectInfo.patient_id == originalSubjectName][" gender"]
+                .values[0]
                 .lower()[0]
             )
 
