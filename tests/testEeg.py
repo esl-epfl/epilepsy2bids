@@ -2,8 +2,10 @@
 
 import copy
 import unittest
+from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 from src.epilepsy2bids.eeg import Eeg, FileFormat
 
@@ -128,6 +130,7 @@ class TestDataLoading(unittest.TestCase):
         np.testing.assert_allclose(
             standardEeg.data, eeg.data, rtol=1e-7, atol=1e-2
         )  # TODO absolute error is high might need to be checked
+        Path("test.edf").unlink()
 
     def test_savecsv(self):
         fileConfig = {  # Siena
@@ -138,9 +141,20 @@ class TestDataLoading(unittest.TestCase):
         eeg = Eeg.loadEdf(
             fileConfig["fileName"], fileConfig["montage"], fileConfig["electrodes"]
         )
-        # TODO write tests
         eeg.standardize()
-        eeg.saveDataFrame("test.csv", FileFormat.CSV)
+        
+        for ext in [FileFormat.CSV, FileFormat.CSV_GZIP, FileFormat.PARQUET_GZIP]:
+            eeg.saveDataFrame(f"test.{ext}", ext)
+            match ext:
+                case FileFormat.CSV:
+                    tblData = pd.read_csv(f"test.{ext}")
+                case FileFormat.CSV_GZIP:
+                    tblData = pd.read_csv(f"test.{ext}", compression="gzip")
+                case FileFormat.PARQUET_GZIP:
+                    tblData = pd.read_parquet(f"test.{ext}")
+            self.assertListEqual(list(tblData), eeg.channels)
+            np.testing.assert_allclose(eeg.data, tblData.to_numpy().transpose())
+            Path(f"test.{ext}").unlink()
 
 
 if __name__ == "__main__":

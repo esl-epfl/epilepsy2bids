@@ -326,20 +326,24 @@ class Eeg:
         dataDF = pd.DataFrame(data=tmpData.transpose(), columns=self.channels)
         # TODO save metadata -- pyarrow might be a good candidate
         dataDF.attrs["fileHeader"] = self._fileHeader
+        dataDF.attrs["fileHeader"]["startdate"] = str(
+            dataDF.attrs["fileHeader"]["startdate"]
+        )
         dataDF.attrs["signalHeader"] = self._signalHeader
 
         # Create directory for file
         if os.path.dirname(file):
             os.makedirs(os.path.dirname(file), exist_ok=True)
         # Write new file
-        if format == FileFormat.PARQUET_GZIP:
-            dataDF.to_parquet(file, index=False, compression="gzip")
-        elif format == FileFormat.CSV_GZIP:
-            dataDF.to_csv(file, index=False, compression="gzip")
-        elif format == FileFormat.CSV:
-            dataDF.to_csv(file, index=False)
-        else:
-            raise ValueError("Unknown output format {}".format(format))
+        match format:
+            case FileFormat.PARQUET_GZIP:
+                dataDF.to_parquet(file, index=False, compression="gzip")
+            case FileFormat.CSV_GZIP:
+                dataDF.to_csv(file, index=False, compression="gzip")
+            case FileFormat.CSV:
+                dataDF.to_csv(file, index=False)
+            case _:
+                raise ValueError("Unknown output format {}".format(format))
 
     def _electrodeSynonymRegex(electrode: str) -> str:
         """Build a regex that matches the different synonyms of an electrode name.
