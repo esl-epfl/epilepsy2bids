@@ -1,15 +1,12 @@
-"""load annotations from the SeizeIT dataset https://doi.org/10.48804/P5Q0OJ to a Annotations object."""
+"""load annotations from the TUH Sz Corpus dataset https://isip.piconepress.com/projects/tuh_eeg/downloads/tuh_eeg_seizure/ to a Annotations object."""
 
 import os
 from pathlib import Path
-import re
 
 import pandas as pd
 import pyedflib
 
 from ..annotations import Annotation, Annotations, EventType, SeizureType
-from ..eeg import Eeg
-
 
 def _loadSeizures(
     edfFile: str,
