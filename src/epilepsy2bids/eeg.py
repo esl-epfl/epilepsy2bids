@@ -6,11 +6,11 @@ import os
 import re
 from typing import TypedDict
 
-from nptyping import NDArray, Shape, Float
 import numpy as np
 import pandas as pd
 import pyedflib
 import resampy
+from nptyping import Float, NDArray, Shape
 
 
 class FileFormat(str, enum.Enum):

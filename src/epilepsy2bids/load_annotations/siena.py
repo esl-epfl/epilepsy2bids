@@ -1,9 +1,9 @@
 """load annotations from the Siena dataset https://physionet.org/content/siena-scalp-eeg/1.0.0/ to a Annotations object."""
 
 import os
-from pathlib import Path
 import re
 import time
+from pathlib import Path
 
 import pandas as pd
 import pyedflib

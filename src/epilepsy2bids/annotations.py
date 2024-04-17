@@ -1,7 +1,7 @@
-from datetime import datetime
 import enum
-from importlib import resources as impresources
 import json
+from datetime import datetime
+from importlib import resources as impresources
 from typing import TypedDict
 
 import numpy as np

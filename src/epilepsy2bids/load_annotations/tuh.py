@@ -8,6 +8,7 @@ import pyedflib
 
 from ..annotations import Annotation, Annotations, EventType, SeizureType
 
+
 def _loadSeizures(
     edfFile: str,
 ) -> tuple[list[tuple], list[SeizureType], list[list[str]], list]:

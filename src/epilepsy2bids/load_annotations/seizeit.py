@@ -1,8 +1,8 @@
 """load annotations from the SeizeIT dataset https://doi.org/10.48804/P5Q0OJ to a Annotations object."""
 
 import os
-from pathlib import Path
 import re
+from pathlib import Path
 
 import pandas as pd
 import pyedflib
