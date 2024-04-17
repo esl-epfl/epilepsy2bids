@@ -1,6 +1,9 @@
 """Eeg class unit testing"""
 
+import copy
 import unittest
+
+import numpy as np
 
 from src.epilepsy2bids.eeg import Eeg, FileFormat
 
@@ -34,7 +37,6 @@ class TestDataLoading(unittest.TestCase):
             eeg = Eeg.loadEdf(
                 fileConfig["fileName"], fileConfig["montage"], fileConfig["electrodes"]
             )
-
             self.assertEqual(eeg.data.shape[0], len(fileConfig["electrodes"]))
             self.assertEqual(len(eeg.channels), len(fileConfig["electrodes"]))
             self.assertEqual(eeg.montage, fileConfig["montage"])
@@ -65,11 +67,46 @@ class TestDataLoading(unittest.TestCase):
         eeg = Eeg.loadEdf(
             fileConfig["fileName"], fileConfig["montage"], fileConfig["electrodes"]
         )
-        eeg.reReferenceToCommonAverage()
-        eeg.reReferenceToReferential("Cz")
-        eeg.reReferenceToBipolar()
-        # TODO write tests
-        eeg.standardize(electrodes=Eeg.BIPOLAR_DBANANA, reference="bipolar")
+        # Common average
+        eegAvg = copy.deepcopy(eeg)
+        eegAvg.reReferenceToCommonAverage()
+        # average of common average ref should be zero
+        np.testing.assert_allclose(
+            np.mean(eegAvg.data, axis=0),
+            np.zeros((eeg.data.shape[1],)),
+            rtol=1e-07,
+            atol=1e-14,
+        )
+        # channel[0] should be data[0] - common average
+        np.testing.assert_array_equal(
+            eegAvg.data[0], eeg.data[0] - np.mean(eeg.data, axis=0)
+        )
+        # Cz Reference
+        eegCz = copy.deepcopy(eeg)
+        eegCz.reReferenceToReferential("Cz")
+        # cz should be zero
+        CzIndex = Eeg._findChannelIndex(eegCz.channels, "Cz", eegCz.montage)
+        np.testing.assert_allclose(
+            eegCz.data[CzIndex],
+            np.zeros((eeg.data.shape[1],)),
+            rtol=1e-07,
+            atol=1e-14,
+        )
+        # Fz should be Fz - Cz
+        FzIndex = Eeg._findChannelIndex(eegCz.channels, "Fz", eegCz.montage)
+        np.testing.assert_array_equal(
+            eegCz.data[FzIndex], eeg.data[FzIndex] - eeg.data[CzIndex]
+        )
+        # Check bipolar channel
+        eegBp = copy.deepcopy(eeg)
+        eegBp.reReferenceToBipolar()
+        i0 = Eeg._findChannelIndex(
+            eeg.channels, Eeg.BIPOLAR_DBANANA[0].split("-")[0], eeg.montage
+        )
+        i1 = Eeg._findChannelIndex(
+            eeg.channels, Eeg.BIPOLAR_DBANANA[0].split("-")[1], eeg.montage
+        )
+        np.testing.assert_array_equal(eegBp.data[0], eeg.data[i0] - eeg.data[i1])
 
     def test_saveEdf(self):
         fileConfig = {  # Siena
