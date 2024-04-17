@@ -117,9 +117,17 @@ class TestDataLoading(unittest.TestCase):
         eeg = Eeg.loadEdf(
             fileConfig["fileName"], fileConfig["montage"], fileConfig["electrodes"]
         )
-        # TODO write tests
         eeg.standardize()
         eeg.saveEdf("test.edf")
+
+        standardEeg = Eeg.loadEdf(
+            "test.edf", fileConfig["montage"], fileConfig["electrodes"]
+        )
+        self.assertEqual(standardEeg.fs, 256)
+        self.assertListEqual(standardEeg.channels, eeg.channels)
+        np.testing.assert_allclose(
+            standardEeg.data, eeg.data, rtol=1e-7, atol=1e-2
+        )  # TODO absolute error is high might need to be checked
 
     def test_savecsv(self):
         fileConfig = {  # Siena
