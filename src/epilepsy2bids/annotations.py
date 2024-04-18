@@ -58,7 +58,6 @@ class Annotations:
                 annotation["confidence"] = "n/a"
             else:
                 annotation["confidence"] = float(row["confidence"])
-            print(row["channels"])
             if row["channels"]:
                 annotation["channels"] = "n/a"
             elif "," in row["channels"]:
@@ -81,7 +80,7 @@ class Annotations:
         return events
 
     def getMask(self, fs: int) -> np.ndarray:
-        mask = np.zeros(int(self.events[0].recordingDuration * fs))
+        mask = np.zeros(int(self.events[0]["recordingDuration"] * fs))
         for event in self.events:
             if event["eventType"].value in SeizureType._member_names_:
                 mask[
