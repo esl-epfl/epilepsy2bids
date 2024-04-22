@@ -1,5 +1,4 @@
 import os
-import shutil
 from importlib import resources as impresources
 from pathlib import Path
 from string import Template
@@ -7,6 +6,7 @@ from string import Template
 import pandas as pd
 
 from ... import bids
+from ...bids.convert2bids import BidsConverter
 from ...eeg import Eeg
 from ...load_annotations.chbmit import loadAnnotationsFromEdf
 
@@ -17,6 +17,7 @@ DATASET = BIDS_DIR / "chbmit"
 def convert(root: Path, outDir: Path):
     root = Path(root)
     outDir = Path(outDir)
+    bidsConverter = BidsConverter(BIDS_DIR, DATASET, root, outDir, loadAnnotationsFromEdf)
     subjects = []
     for _, directory, _ in os.walk(root):
         for subject in directory:
@@ -110,20 +111,4 @@ def convert(root: Path, outDir: Path):
             participants["sex"].append("n/a")
             participants["comment"].append("n/a")
 
-    participantsDf = pd.DataFrame(participants)
-    participantsDf.sort_values(by=["participant_id"], inplace=True)
-    participantsDf.to_csv(outDir / "participants.tsv", sep="\t", index=False)
-    participantsJsonFileName = DATASET / "participants.json"
-    shutil.copy(participantsJsonFileName, outDir)
-
-    # Copy Readme file
-    readmeFileName = DATASET / "README.md"
-    shutil.copyfile(readmeFileName, outDir / "README")
-
-    # Copy dataset description
-    descriptionFileName = DATASET / "dataset_description.json"
-    shutil.copy(descriptionFileName, outDir)
-
-    # Copy Events JSON Sidecar
-    eventsFileName = BIDS_DIR / "events.json"
-    shutil.copy(eventsFileName, outDir)
+    bidsConverter.saveMetadata(participants)

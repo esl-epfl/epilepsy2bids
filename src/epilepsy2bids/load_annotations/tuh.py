@@ -57,7 +57,7 @@ def _loadSeizures(
         if row["channel"] == "TERM":
             channels.append("n/a")
         else:
-            raise ValueError(f"Unknown channel: {row["channel"]}")
+            raise ValueError(f"Unknown channel: {row['channel']}")
 
     return seizures, types, confidence, channels
 
