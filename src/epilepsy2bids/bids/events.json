@@ -159,8 +159,7 @@
         "HED": "Statistical-uncertainty/#"
     },
     "channels": {
-        "Description": "EEG channels on which the event is visible",
-        "HED": "Polygraphic-channel-consequence-of-episode"
+        "Description": "EEG channels on which the event is visible"
     },
     "dateTime": {
         "Description": "Start date-time of the recording",

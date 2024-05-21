@@ -45,15 +45,8 @@ def convert(root: Path, outDir: Path):
                         sessionFolder.name
                     ] = session
 
-                addEegJsonDict = {
-                    "split": subset,
-                    "subject": subjectFolder.name,
-                    "session": sessionFolder.name,
-                }
                 edfFiles = sorted((root / sessionFolder).glob("**/*.edf"))
-                bidsConverter.buildBIDSHierarchy(
-                    edfFiles, subject, session, addEegJsonDict=addEegJsonDict
-                )
+                bidsConverter.buildBIDSHierarchy(edfFiles, subject, session)
 
     # Build participant metadata
     participants = {"participant_id": [], "TUH_id": [], "split": []}

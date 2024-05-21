@@ -23,7 +23,7 @@ class BidsConverter:
         os.makedirs(outPath, exist_ok=True)
         for fileIndex, edfFile in enumerate(edfFiles):
             edfBaseName = (
-                outPath / f"sub-{subject}_ses-{session}_task-{task}_run-{fileIndex:02}_eeg"
+                outPath / f"sub-{subject}_ses-{session}_task-{task}_run-{(fileIndex + 1):02}_eeg"
             )
             edfFileName = edfBaseName.with_suffix(".edf")
             # Load EEG and standardize it

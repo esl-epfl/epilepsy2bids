@@ -3,6 +3,7 @@ The content of data is white noise. The output file is named input_sample.edf
 """
 
 import argparse
+from pathlib import Path
 
 import numpy as np
 from pyedflib import highlevel
@@ -11,8 +12,8 @@ DURATION = 2
 AMPLITUDE = 100
 
 
-def makeSample(input: str, duration: int = DURATION) -> None:
-    signals, signal_headers, header = highlevel.read_edf(input)
+def makeSample(input: Path, outFilename: Path, duration: int = DURATION) -> None:
+    signals, signal_headers, header = highlevel.read_edf(str(input))
 
     if isinstance(signals, np.ndarray):
         signals = signals.tolist()  # Make sure signals is a list
@@ -20,11 +21,10 @@ def makeSample(input: str, duration: int = DURATION) -> None:
     # Keep only short duration of white noise
     for i in range(len(signals)):
         signals[i] = (
-            np.random.rand(int(duration * signal_headers[i]["sample_rate"])) * AMPLITUDE
+            np.random.rand(int(duration * signal_headers[i]["sample_frequency"])) * AMPLITUDE
         )
 
-    outFilename = input[:-4] + "_sample.edf"
-    highlevel.write_edf(outFilename, signals, signal_headers, header)
+    highlevel.write_edf(str(outFilename), signals, signal_headers, header)
 
 
 if __name__ == "__main__":
@@ -36,4 +36,4 @@ if __name__ == "__main__":
     parser.add_argument("input", help="input edf file.")
 
     args = parser.parse_args()
-    makeSample(args.input, DURATION)
+    makeSample(args.input, args.input[:-4] + "_sample.edf". DURATION)

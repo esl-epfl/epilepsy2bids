@@ -165,9 +165,14 @@ class Eeg:
             if electrodes is not None:
                 allChannels = edf.getSignalLabels()
                 for electrode in electrodes:
-                    index = Eeg._findChannelIndex(allChannels, electrode, montage)
-                    data.append(edf.readSignal(index))
-                    channels.append(edf.getLabel(index))
+                    try:
+                        index = Eeg._findChannelIndex(allChannels, electrode, montage)
+                        data.append(edf.readSignal(index))
+                        channels.append(edf.getLabel(index))
+                    except ValueError:
+                        print(f"Missing electrode {electrode} in file {edfFile} replaced by zeros.")
+                        data.append(np.zeros_like(edf.readSignal(0)))
+                        channels.append(electrode)
             # Else read all channels with a fixed fs
             else:
                 index = 0

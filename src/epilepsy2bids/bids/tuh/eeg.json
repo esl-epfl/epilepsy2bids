@@ -12,10 +12,6 @@
 
     "TaskName": "$task",
     "TaskDescription": "Subjects were monitored with a Video-EEG at the Temple Univsersity Hospital, Philadelphia, USA.",
-    "InstitutionName": "Temple University Hospital",
-
-    "TUHSplit": "$split",
-    "TUHSubject": "$subject",
-    "TUHSession": "$session"
+    "InstitutionName": "Temple University Hospital"
   }
   
