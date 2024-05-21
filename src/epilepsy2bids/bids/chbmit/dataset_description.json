@@ -1,7 +1,7 @@
 {
   "Name": "BIDS CHB-MIT Scalp EEG Database",
   "BIDSVersion": "1.8.0",
-  "HEDVersion": "8.2.0",
+  "HEDVersion": "score_1.1.0",
   "DatasetType": "raw",
   "License": "Open Data Commons Attribution License v1.0",
   "Authors": [

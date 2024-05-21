@@ -1,8 +1,4 @@
 {
-    "participant_id": {
-        "Description": "unique identifier for the participant",
-        "HED": "Experiment-participant/#"
-    },
     "age": {
       "Description": "age of the participant at the time of recording",
       "Units": "years",
