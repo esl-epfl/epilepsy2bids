@@ -1,5 +1,6 @@
 """load annotations from the SeizeIT dataset https://doi.org/10.48804/P5Q0OJ to a Annotations object."""
 
+import math
 import os
 import re
 from pathlib import Path
@@ -41,7 +42,7 @@ def _loadSeizures(
     )
     for _, row in annotations.iterrows():
         # Seizure Timing
-        if row["stop"] is not None:
+        if not math.isnan(row["stop"]):
             seizures.append((row["start"], row["stop"]))
             confidence.append("n/a")
         # 12 weizures do not mark the end time, consider a default seizure time of 30 seconds
