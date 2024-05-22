@@ -1,0 +1,13 @@
+# Source: SeizeIt1
+# Annotators: Neurologist
+# Subject: P_ID64
+# Gender: Male
+# Age: 20
+# Recording: r1
+# Seizure Type: "FIAS"=Focal Impaire Awareness, "FA"= Focal Awareness, "F-BTC"=Focal-Bilateral Tonic Clonic 
+# Origin: "Temp"=Temporal, "Fronto-temp"= Fronto-temporal, "Occipito-temp"=Occipito-temporal, "Fronto-par"=Fronto-parietal, "Par"=Parietal, "NC"=not clear 
+# Hemisphere: "bi"=Bihemispherical, "R"=Right, "L"=Left, "NC"=Not clear 
+ 
+
+
+8971	None	FIA	Hem:L, Orig:Temp, bhe: 0

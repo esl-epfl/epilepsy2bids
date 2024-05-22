@@ -1,0 +1,52 @@
+PN16 
+
+Data Sampling Rate: 512 Hz
+
+Channels in EDF files:
+Channel 1: Fp1      
+Channel 2: F3      
+Channel 3: C3      
+Channel 4: P3      
+Channel 5: 1      
+Channel 6: F7      
+Channel 7: T5      
+Channel 8: Fc1      
+Channel 9: Fc5      
+Channel 10: Cp1      
+Channel 11: Cp5      
+Channel 12: F9      
+Channel 13: Fz      
+Channel 14: Pz      
+Channel 15: F4      
+Channel 16: C4      
+Channel 17: P4      
+Channel 18: O2      
+Channel 19: F8      
+Channel 20: T4      
+Channel 21: T6      
+Channel 22: Fc2      
+Channel 23: Fc6      
+Channel 24: Cp2      
+Channel 25: Cp6      
+Channel 26: F10      
+Channel 29: EKG 1    
+Channel 30: EKG 2    
+Channel 31: Fp2      
+Channel 39: T3      
+Channel 40: Cz  
+
+
+Seizure n 1 (in sleep):
+File name: PN16-1.edf 
+Registration start time: 20.45.21
+Registration end time: 23.03.11
+Seizure start time: 22.45.05 
+Seizure end time: 22.47.08
+
+
+Seizure n 2 (in sleep):
+File name: PN16-2.edf 
+Registration start time: 00.53.55
+Registration end time: 03.28.52
+Seizure start time: 03.16.49 
+Seizure end time:03.18.36

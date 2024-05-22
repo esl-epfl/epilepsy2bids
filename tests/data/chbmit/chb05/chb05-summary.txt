@@ -1,0 +1,233 @@
+Data Sampling Rate: 256 Hz
+*************************
+
+Channels in EDF Files:
+**********************
+Channel 1: FP1-F7
+Channel 2: F7-T7
+Channel 3: T7-P7
+Channel 4: P7-O1
+Channel 5: FP1-F3
+Channel 6: F3-C3
+Channel 7: C3-P3
+Channel 8: P3-O1
+Channel 9: FP2-F4
+Channel 10: F4-C4
+Channel 11: C4-P4
+Channel 12: P4-O2
+Channel 13: FP2-F8
+Channel 14: F8-T8
+Channel 15: T8-P8
+Channel 16: P8-O2
+Channel 17: FZ-CZ
+Channel 18: CZ-PZ
+Channel 19: P7-T7
+Channel 20: T7-FT9
+Channel 21: FT9-FT10
+Channel 22: FT10-T8
+Channel 23: T8-P8
+
+File Name: chb05_01.edf
+File Start Time: 17:20:05
+File End Time: 18:20:15
+Number of Seizures in File: 0
+
+File Name: chb05_02.edf
+File Start Time: 18:20:57
+File End Time: 19:20:57
+Number of Seizures in File: 0
+
+File Name: chb05_03.edf
+File Start Time: 19:21:04
+File End Time: 20:21:04
+Number of Seizures in File: 0
+
+File Name: chb05_04.edf
+File Start Time: 20:21:11
+File End Time: 21:21:11
+Number of Seizures in File: 0
+
+File Name: chb05_05.edf
+File Start Time: 21:21:19
+File End Time: 22:21:19
+Number of Seizures in File: 0
+
+File Name: chb05_06.edf
+File Start Time: 22:21:25
+File End Time: 23:21:25
+Number of Seizures in File: 1
+Seizure Start Time: 417 seconds
+Seizure End Time: 532 seconds
+
+File Name: chb05_07.edf
+File Start Time: 23:21:32
+File End Time: 24:21:32
+Number of Seizures in File: 0
+
+File Name: chb05_08.edf
+File Start Time: 00:21:39
+File End Time: 1:21:39
+Number of Seizures in File: 0
+
+File Name: chb05_09.edf
+File Start Time: 01:21:46
+File End Time: 2:21:46
+Number of Seizures in File: 0
+
+File Name: chb05_10.edf
+File Start Time: 02:21:53
+File End Time: 3:21:53
+Number of Seizures in File: 0
+
+File Name: chb05_11.edf
+File Start Time: 03:22:01
+File End Time: 4:22:01
+Number of Seizures in File: 0
+
+File Name: chb05_12.edf
+File Start Time: 04:22:08
+File End Time: 5:22:08
+Number of Seizures in File: 0
+
+File Name: chb05_13.edf
+File Start Time: 05:22:15
+File End Time: 6:22:15
+Number of Seizures in File: 1
+Seizure Start Time: 1086 seconds
+Seizure End Time: 1196 seconds
+
+File Name: chb05_14.edf
+File Start Time: 06:22:21
+File End Time: 7:22:21
+Number of Seizures in File: 0
+
+File Name: chb05_15.edf
+File Start Time: 07:22:28
+File End Time: 8:22:28
+Number of Seizures in File: 0
+
+File Name: chb05_16.edf
+File Start Time: 08:22:35
+File End Time: 9:22:35
+Number of Seizures in File: 1
+Seizure Start Time: 2317 seconds
+Seizure End Time: 2413 seconds
+
+File Name: chb05_17.edf
+File Start Time: 09:22:42
+File End Time: 10:22:42
+Number of Seizures in File: 1
+Seizure Start Time: 2451 seconds
+Seizure End Time: 2571 seconds
+
+File Name: chb05_18.edf
+File Start Time: 10:22:50
+File End Time: 11:22:50
+Number of Seizures in File: 0
+
+File Name: chb05_19.edf
+File Start Time: 11:22:57
+File End Time: 12:22:57
+Number of Seizures in File: 0
+
+File Name: chb05_20.edf
+File Start Time: 12:23:04
+File End Time: 13:23:04
+Number of Seizures in File: 0
+
+File Name: chb05_21.edf
+File Start Time: 13:23:11
+File End Time: 14:23:11
+Number of Seizures in File: 0
+
+File Name: chb05_22.edf
+File Start Time: 14:23:17
+File End Time: 15:23:17
+Number of Seizures in File: 1
+Seizure Start Time: 2348 seconds
+Seizure End Time: 2465 seconds
+
+File Name: chb05_23.edf
+File Start Time: 15:23:24
+File End Time: 16:23:24
+Number of Seizures in File: 0
+
+File Name: chb05_24.edf
+File Start Time: 16:23:31
+File End Time: 17:23:31
+Number of Seizures in File: 0
+
+File Name: chb05_25.edf
+File Start Time: 17:23:38
+File End Time: 18:23:38
+Number of Seizures in File: 0
+
+File Name: chb05_26.edf
+File Start Time: 18:23:46
+File End Time: 19:23:46
+Number of Seizures in File: 0
+
+File Name: chb05_27.edf
+File Start Time: 19:23:53
+File End Time: 20:23:53
+Number of Seizures in File: 0
+
+File Name: chb05_28.edf
+File Start Time: 20:24:00
+File End Time: 21:24:00
+Number of Seizures in File: 0
+
+File Name: chb05_29.edf
+File Start Time: 21:24:07
+File End Time: 22:24:07
+Number of Seizures in File: 0
+
+File Name: chb05_30.edf
+File Start Time: 22:24:14
+File End Time: 23:24:14
+Number of Seizures in File: 0
+
+File Name: chb05_31.edf
+File Start Time: 23:24:21
+File End Time: 24:24:21
+Number of Seizures in File: 0
+
+File Name: chb05_32.edf
+File Start Time: 00:24:28
+File End Time: 1:24:28
+Number of Seizures in File: 0
+
+File Name: chb05_33.edf
+File Start Time: 01:24:35
+File End Time: 2:24:35
+Number of Seizures in File: 0
+
+File Name: chb05_34.edf
+File Start Time: 02:24:42
+File End Time: 3:24:42
+Number of Seizures in File: 0
+
+File Name: chb05_35.edf
+File Start Time: 03:24:49
+File End Time: 4:24:49
+Number of Seizures in File: 0
+
+File Name: chb05_36.edf
+File Start Time: 04:24:56
+File End Time: 5:24:56
+Number of Seizures in File: 0
+
+File Name: chb05_37.edf
+File Start Time: 05:25:03
+File End Time: 6:25:03
+Number of Seizures in File: 0
+
+File Name: chb05_38.edf
+File Start Time: 06:25:10
+File End Time: 7:25:10
+Number of Seizures in File: 0
+
+File Name: chb05_39.edf
+File Start Time: 07:25:17
+File End Time: 8:25:17
+Number of Seizures in File: 0

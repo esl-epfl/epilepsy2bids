@@ -1,0 +1,16 @@
+patient_id, age_years, gender, seizure, localization, lateralization, eeg_channel, number_seizures, rec_time_minutes
+PN00,55,Male,IAS,T,R,29,5,198
+PN01,46,Male,IAS,T,L,29,2,809
+PN03,54,Male,IAS,T,R,29,2,752
+PN05,51,Female,IAS,T,L,29,3,359
+PN06,36,Male,IAS,T,L,29,5,722
+PN07,20,Female,IAS,T,L,29,1,523
+PN09,27,Female,IAS,T,L,29,3,410
+PN10,25,Male,FBTC,F,Bilateral,20,10,1002
+PN11,58,Female,IAS,T,R,29,1,145
+PN12,71,Male,IAS,T,L,29,4,246
+PN13,34,Female,IAS,T,L,29,3,519
+PN14,49,Male,WIAS,T,L,29,4,1408
+PN16,41,Female,IAS,T,L,29,2,303
+PN17,42,Male,IAS,T,R,29,2,308
+

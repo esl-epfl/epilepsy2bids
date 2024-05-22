@@ -1,0 +1,76 @@
+PN00
+
+Data Sampling Rate: 512 Hz
+
+Channels in EDF files:
+Channel 1: Fp1      
+Channel 2: F3      
+Channel 3: C3      
+Channel 4: P3      
+Channel 5: 1      
+Channel 6: F7      
+Channel 7: T3      
+Channel 8: T5      
+Channel 9: Fc1      
+Channel 10: Fc5      
+Channel 11: Cp1      
+Channel 12: Cp5      
+Channel 13: F9      
+Channel 14: Fz      
+Channel 15: Cz      
+Channel 16: Pz      
+Channel 17: Fp2      
+Channel 18: F4      
+Channel 19: C4      
+Channel 20: P4      
+Channel 21: O2      
+Channel 22: F8      
+Channel 23: T4      
+Channel 24: T6      
+Channel 25: Fc2      
+Channel 26: Fc6      
+Channel 27: Cp2      
+Channel 28: Cp6      
+Channel 29: F10      
+Channel 33: EKG 1    
+Channel 34: EKG 2
+
+
+Seizure n 1
+File name: PN00-1.edf
+Registration start time: 19.39.33
+Registration end time:  20.22.58
+Seizure start time: 19.58.36
+Seizure end time: 19.59.46
+
+Seizure n 2 
+File name: PN00-2.edf
+Registration start time:  02.18.17
+Registration end time:  02.56.19
+Seizure start time: 02.38.37
+Seizure end time: 02.39.31
+
+Seizure n 3
+File name: PN00-3.edf
+Registration start time: 18.15.44
+Registration end time: 18.57.13
+Seizure start time: 18.28.29
+Seizure end time: 19.29.29
+
+Seizure n 4
+File name: PN00-4.edf
+Registration start time: 20.51.43
+Registration end time: 21.26.25
+Seizure start time: 21.08.29
+Seizure end time: 21.09.43
+
+Seizure n 5 
+File name: PN00-5.edf
+Registration start time: 22.22.04
+Registration end time:  22.57.27
+Seizure start time: 22.37.08
+Seizure end time: 22.38.15
+
+
+
+ 

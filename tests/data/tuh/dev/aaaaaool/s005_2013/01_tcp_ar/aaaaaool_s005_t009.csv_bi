@@ -1,0 +1,7 @@
+# version = csv_v1.0.0
+# bname = aaaaaool_s005_t009
+# duration = 300.00 secs
+# montage_file = $NEDC_NFC/lib/nedc_eas_default_montage.txt
+#
+channel,start_time,stop_time,label,confidence
+TERM,0.0059,1.0255,bckg,1.0000
