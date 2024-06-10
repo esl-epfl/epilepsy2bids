@@ -1,6 +1,5 @@
 from importlib import resources as impresources
 import json
-import os.path
 import re
 from shutil import rmtree
 import subprocess
