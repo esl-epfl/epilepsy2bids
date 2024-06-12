@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from src.epilepsy2bids.annotations import Annotations
+from epilepsy2bids.annotations import Annotations
 
 
 class TestAnnotations(unittest.TestCase):
