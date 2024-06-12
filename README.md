@@ -17,7 +17,7 @@ Currently, the following datasets are supported:
 
 ## Installation
 
-The epilepsy2bids package is released for macOS, Windows and Linux on PyPi. It can be installed using pip :
+The epilepsy2bids package is released for macOS, Windows, and Linux, on [PyPI](https://pypi.org/project/epilepsy2bids/). It can be installed using pip:
 
 ```bash
 python -m pip install -U pip
