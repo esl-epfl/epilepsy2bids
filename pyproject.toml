@@ -34,7 +34,8 @@ dependencies = [
   "pyarrow>=16.1.0",
   "pyedflib>=0.1.36",
   "resampy>=0.4.2",
-  "termcolor>=2.4.0"
+  "termcolor>=2.4.0",
+  "wonambi>=7.12"
   ]
 classifiers = [
     "Programming Language :: Python :: 3",
