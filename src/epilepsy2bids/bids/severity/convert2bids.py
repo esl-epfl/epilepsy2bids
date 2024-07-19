@@ -67,7 +67,7 @@ def convert(root: Path, outDir: Path):
         # Extract subject & session ID
         subject += 1
         trcFiles = sorted((root / folder).glob("*.TRC"))
-        institute = folder.split("/")[-1].replace("_", "-").split("-")[1]
+        institute = folder.parts[-1].replace("_", "-").split("-")[1]
         task = "szMonitoring"
         # Loop over TRC files
         for fileIndex, trcFile in enumerate(trcFiles):
