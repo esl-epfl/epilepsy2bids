@@ -62,7 +62,7 @@ def convert(root: Path, outDir: Path):
     dfAnnotations = preLoadAnnotations(root / "seizures_from_eeg.csv")
 
     # Loop over folders
-    for subject, folder in enumerate(sorted([root.glob("PAT*") + root.glob("pat*")])):
+    for subject, folder in enumerate(sorted(root.glob("PAT*", case_sensitive=False))):
         print(folder)
         # Extract subject & session ID
         subject += 1
