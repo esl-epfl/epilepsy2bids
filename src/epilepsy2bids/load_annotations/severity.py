@@ -27,10 +27,8 @@ def preLoadAnnotations(annotFile):
 
 
 def trc2events(df, trcFile, startTime, duration):
-    sev_id = trcFile.split("/")[-2].replace("_", "-").split("-")[0:3]
-    sev_id = "-".join(sev_id)
     TRC_fn = trcFile.split("/")[-1]
-    events = df.query(f'sev_id == "{sev_id}" & TRC_fn == "{TRC_fn}"')
+    events = df.query(f'TRC_fn == "{TRC_fn}"')
 
     annotations = Annotations()
     for _, seizure in events.iterrows():

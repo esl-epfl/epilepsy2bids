@@ -15,7 +15,6 @@
     "RecordingDuration": $duration,
 
     "TaskName": "$task",
-    "TaskDescription": "Subjects were monitored with a Video-EEG.",
-    "InstitutionName": $institution
+    "TaskDescription": "Subjects were monitored with a Video-EEG."
   }
   

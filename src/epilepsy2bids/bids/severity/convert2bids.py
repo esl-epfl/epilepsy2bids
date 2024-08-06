@@ -62,12 +62,11 @@ def convert(root: Path, outDir: Path):
     dfAnnotations = preLoadAnnotations(root / "seizures_from_eeg.csv")
 
     # Loop over folders
-    for subject, folder in enumerate(sorted(root.glob("*/SEV*"))):
+    for subject, folder in enumerate(sorted([root.glob("PAT*") + root.glob("pat*")])):
         print(folder)
         # Extract subject & session ID
         subject += 1
-        trcFiles = sorted((root / folder).glob("*.TRC"))
-        institute = folder.parts[-1].replace("_", "-").split("-")[1]
+        trcFiles = sorted((root / folder).glob("EEG_*.TRC"))
         task = "szMonitoring"
         # Loop over TRC files
         for fileIndex, trcFile in enumerate(trcFiles):
@@ -105,8 +104,7 @@ def convert(root: Path, outDir: Path):
                     "fs": f"{eeg.fs:d}",
                     "channels": f"{eeg.data.shape[0]}",
                     "duration": f"{(eeg.data.shape[1] / eeg.fs):.2f}",
-                    "task": task,
-                    "institution": institute,
+                    "task": task
                 }
 
                 with open(bidsConverter.DATASET / "eeg.json", "r") as f:
