@@ -369,6 +369,12 @@ class Eeg:
             electrode = "(T ?6|P ?8)"
         elif electrode == "O1":
             electrode = "(O ?1|0 ?1)"
+        elif electrode == "Fz":
+            electrode = "(Fz|F ?z)"
+        elif electrode == "Pz":
+            electrode = "(Pz|P ?z)"
+        elif electrode == "Cz":
+            electrode = "(Cz|C ?z)"
 
         return electrode
 
