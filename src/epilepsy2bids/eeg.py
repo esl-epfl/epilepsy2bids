@@ -360,15 +360,15 @@ class Eeg:
             str: regex that matches the different synonyms of an electrode name
         """
         if electrode == "T3" or electrode == "T7":
-            electrode = "(T3|T7)"
+            electrode = "(T ?3|T ?7)"
         elif electrode == "T4" or electrode == "T8":
-            electrode = "(T4|T8)"
+            electrode = "(T ?4|T ?8)"
         elif electrode == "T5" or electrode == "P7":
-            electrode = "(T5|P7)"
+            electrode = "(T ?5|P ?7)"
         elif electrode == "T6" or electrode == "P8":
-            electrode = "(T6|P8)"
+            electrode = "(T ?6|P ?8)"
         elif electrode == "O1":
-            electrode = "(O1|01)"
+            electrode = "(O ?1|0 ?1)"
 
         return electrode
 
@@ -398,8 +398,10 @@ class Eeg:
 
         # Regex on channel name
         if montage == Eeg.Montage.UNIPOLAR:
-            parts = re.findall(r"[^\W\d_]+|\d+", electrode)
-            regExToFind = r"^(EEG )?{}(-[a-z]?[1-9]*)?".format("( )?".join(parts))
+            if electrode[0] != "(":
+                parts = re.findall(r"[^\W\d_]+|\d+", electrode)
+                electrode = " ?".join(parts)
+            regExToFind = r"^(EEG )?{}(-[a-z]?[1-9]*)?".format(electrode)
         elif montage == Eeg.Montage.BIPOLAR:
             regExToFind = electrodes[0] + r".*(-)?.*" + electrodes[1]
 
