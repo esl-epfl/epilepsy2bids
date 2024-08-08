@@ -398,7 +398,8 @@ class Eeg:
 
         # Regex on channel name
         if montage == Eeg.Montage.UNIPOLAR:
-            regExToFind = r"^(EEG )?{}(-[a-z]?[1-9]*)?".format(electrode)
+            parts = re.findall(r"[^\W\d_]+|\d+", electrode)
+            regExToFind = r"^(EEG )?{}(-[a-z]?[1-9]*)?".format("( )?".join(parts))
         elif montage == Eeg.Montage.BIPOLAR:
             regExToFind = electrodes[0] + r".*(-)?.*" + electrodes[1]
 
