@@ -52,7 +52,10 @@ class Annotations:
         for _, row in df.iterrows():
             annotation = Annotation()
             annotation["onset"] = float(row["onset"])
-            annotation["duration"] = float(row["duration"])
+            try:
+                annotation["duration"] = float(row["duration"])
+            except ValueError:
+                annotation["duration"] = "n/a"
             annotation["eventType"] = EventType[row["eventType"]]
             if row["confidence"]:
                 annotation["confidence"] = "n/a"
@@ -98,7 +101,10 @@ class Annotations:
             for event in self.events:
                 line = ""
                 line += "{:.2f}\t".format(event["onset"])
-                line += "{:.2f}\t".format(event["duration"])
+                try:
+                    line += "{:.2f}\t".format(event["duration"])
+                except ValueError:
+                    line += "n/a\t"
                 line += "{}\t".format(event["eventType"].value)
                 if isinstance(event["confidence"], (int, float)):
                     line += "{:.2f}\t".format(event["confidence"])

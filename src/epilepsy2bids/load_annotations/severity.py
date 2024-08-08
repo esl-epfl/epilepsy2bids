@@ -43,7 +43,7 @@ def trc2events(df, trcFile, startTime, duration):
             annotation["onset"] = (start_utc - seizure["focal_start"]).seconds
             end = np.max([seizure["tonic_end"], seizure["clonic_end"]])
             print(end)
-            if pd.isna(end):
+            if pd.isnull(end):
                 annotation["duration"] = "n/a"
             else:
                 annotation["duration"] = min(duration, (end - start_utc).seconds)
