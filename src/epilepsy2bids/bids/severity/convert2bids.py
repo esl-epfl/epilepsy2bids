@@ -59,7 +59,7 @@ def convert(root: Path, outDir: Path):
     bidsConverter = BidsConverter(BIDS_DIR, DATASET, root, outDir)
 
     # Load raw annotations
-    dfAnnotations = preLoadAnnotations(root / "seizures_from_eeg.csv")
+    dfAnnotations = preLoadAnnotations("../seizures_from_eeg.csv")
 
     # Loop over folders
     for subject, folder in enumerate(sorted(root.glob("PAT*", case_sensitive=False))):
@@ -81,6 +81,8 @@ def convert(root: Path, outDir: Path):
                     / f"ses-{(fileIndex + 1):02}"
                     / "eeg"
                 )
+                if outPath.exists():
+                    continue
                 os.makedirs(outPath, exist_ok=True)
 
                 edfBaseName = outPath / (
