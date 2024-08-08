@@ -68,6 +68,13 @@ def convert(root: Path, outDir: Path):
         subject += 1
         trcFiles = sorted((root / folder).glob("EEG_*.TRC"))
         task = "szMonitoring"
+        
+        outPath = (
+                    bidsConverter.outDir
+                    / f"sub-{subject}"
+        )
+        if outPath.exists():
+            continue
         # Loop over TRC files
         for fileIndex, trcFile in enumerate(trcFiles):
             print(trcFile)
@@ -81,8 +88,6 @@ def convert(root: Path, outDir: Path):
                     / f"ses-{(fileIndex + 1):02}"
                     / "eeg"
                 )
-                if outPath.exists():
-                    continue
                 os.makedirs(outPath, exist_ok=True)
 
                 edfBaseName = outPath / (
