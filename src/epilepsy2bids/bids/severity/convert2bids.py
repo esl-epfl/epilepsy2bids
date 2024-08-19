@@ -89,6 +89,10 @@ def convert(root: Path, outDir: Path):
                     / "eeg"
                 )
                 os.makedirs(outPath, exist_ok=True)
+                
+                if len(segment.channels) < 1:
+                    print(f"No scalp EEG channels found in {trcFile}. Skipping...")
+                    continue
 
                 edfBaseName = outPath / (
                     f"sub-{subject}"
