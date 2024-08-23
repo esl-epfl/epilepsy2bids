@@ -4,6 +4,7 @@ from pathlib import Path
 import shutil
 from string import Template
 
+from natsort import natsorted
 import pandas as pd
 
 from ...eeg import Eeg
@@ -63,7 +64,7 @@ def convert(root: Path, outDir: Path):
     subjectID = dict()
 
     # Loop over folders
-    for subject, folder in enumerate(sorted(root.glob("PAT*", case_sensitive=False))):
+    for subject, folder in enumerate(natsorted(root.glob("PAT*", case_sensitive=False))):
         exclusions = ["PAT_188", 
                     "PAT_189", 
                     "PAT_190", 
@@ -110,7 +111,7 @@ def convert(root: Path, outDir: Path):
         print(folder)
         # Extract subject & session ID
         subject += 1
-        trcFiles = sorted((root / folder).glob("EEG_*.TRC"))
+        trcFiles = natsorted((root / folder).glob("EEG_*.TRC"))
         task = "szMonitoring"
         subjectID[subject] = folder.name
         
