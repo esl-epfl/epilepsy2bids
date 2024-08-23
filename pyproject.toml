@@ -28,6 +28,7 @@ description = "Python library for converting EEG datasets of people with epileps
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+  "natsort>=8.4.0",
   "nptyping>=2.5.0",
   "numpy>=1.24.3",
   "pandas>=2.1.3",

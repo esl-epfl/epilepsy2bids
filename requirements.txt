@@ -1,3 +1,4 @@
+natsort
 nptyping
 numpy
 pandas
