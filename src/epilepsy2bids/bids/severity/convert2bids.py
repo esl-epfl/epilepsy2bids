@@ -63,6 +63,49 @@ def convert(root: Path, outDir: Path):
 
     # Loop over folders
     for subject, folder in enumerate(sorted(root.glob("PAT*", case_sensitive=False))):
+        exclusions = ["PAT_188", 
+                    "PAT_189", 
+                    "PAT_190", 
+                    "PAT_191", 
+                    "PAT_192", 
+                    "PAT_193", 
+                    "PAT_194", 
+                    "PAT_195", 
+                    "PAT_196", 
+                    "PAT_197", 
+                    "PAT_198", 
+                    "PAT_199", 
+                    "PAT_200", 
+                    "PAT_201", 
+                    "PAT_202", 
+                    "PAT_217", 
+                    "PAT_203", 
+                    "PAT_218", 
+                    "PAT_204", 
+                    "PAT_205", 
+                    "PAT_219", 
+                    "PAT_206", 
+                    "PAT_207", 
+                    "PAT_208", 
+                    "PAT_220", 
+                    "PAT_209", 
+                    "PAT_216", 
+                    "PAT_228", 
+                    "PAT_229", 
+                    "PAT_230", 
+                    "PAT_210", 
+                    "PAT_211", 
+                    "PAT_212", 
+                    "PAT_213", 
+                    "PAT_227", 
+                    "PAT_214", 
+                    "PAT_215", 
+                    "PAT_187",
+                    "Pat_99"]
+        for exclude in exclusions:
+            if exclude == folder.name:
+                print(f"Excluding {folder.name}")
+                continue
         print(folder)
         # Extract subject & session ID
         subject += 1
