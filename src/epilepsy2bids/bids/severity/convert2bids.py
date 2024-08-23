@@ -60,6 +60,7 @@ def convert(root: Path, outDir: Path):
 
     # Load raw annotations
     dfAnnotations = preLoadAnnotations("../seizures_from_eeg.csv")
+    subjectID = dict()
 
     # Loop over folders
     for subject, folder in enumerate(sorted(root.glob("PAT*", case_sensitive=False))):
@@ -101,7 +102,7 @@ def convert(root: Path, outDir: Path):
                     "PAT_214", 
                     "PAT_215", 
                     "PAT_187",
-                    "Pat_99"]
+                    "PAT_99"]
         for exclude in exclusions:
             if exclude == folder.name:
                 print(f"Excluding {folder.name}")
@@ -111,10 +112,11 @@ def convert(root: Path, outDir: Path):
         subject += 1
         trcFiles = sorted((root / folder).glob("EEG_*.TRC"))
         task = "szMonitoring"
+        subjectID[subject] = folder.name
         
         outPath = (
                     bidsConverter.outDir
-                    / f"sub-{subject}"
+                    / f"sub-{subject:02}"
         )
         if outPath.exists():
             continue
@@ -127,7 +129,7 @@ def convert(root: Path, outDir: Path):
             for segmentIndex, segment in enumerate(segments):
                 outPath = (
                     bidsConverter.outDir
-                    / f"sub-{subject}"
+                    / f"sub-{subject:02}"
                     / f"ses-{(fileIndex + 1):02}"
                     / "eeg"
                 )
@@ -138,7 +140,7 @@ def convert(root: Path, outDir: Path):
                     continue
 
                 edfBaseName = outPath / (
-                    f"sub-{subject}"
+                    f"sub-{subject:02}"
                     + f"_ses-{(fileIndex + 1):02}"
                     + f"_task-{task}"
                     + f"_run-{(segmentIndex + 1):02}"
@@ -177,8 +179,10 @@ def convert(root: Path, outDir: Path):
                 annotations.saveTsv(edfBaseName.as_posix()[:-4] + "_events.tsv")
 
     # Build participant metadata
-    participants = {"participant_id": []}
+    participants = {"participant_id": [],
+                    "micromed_id": []}
     for folder in outDir.glob("sub-*"):
         subject = os.path.split(folder)[-1]
         participants["participant_id"].append(subject)
+        participants["micromed_id"].append(subjectID[int(subject[4:])])
     bidsConverter.saveMetadata(participants)
