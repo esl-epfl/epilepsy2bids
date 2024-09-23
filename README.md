@@ -1,6 +1,6 @@
 # Epilepsy2Bids
 
-Library for converting EEG datasets of people with epilepsy to [EEG-BIDS](https://doi.org/10.1038/s41597-019-0104-8) compatible datasets. These datasets comply with the [ILAE and IFCN minimum recording standards](https://doi.org/10.1016/j.clinph.2023.01.002). They provide annotations that are [HED-SCORE](http://arxiv.org/pdf/2310.15173) compatible. The datasets are formatted to be operated by the [SzCORE seizure validation framework](https://arxiv.org/pdf/2402.13005).
+Library for converting EEG datasets of people with epilepsy to [EEG-BIDS](https://doi.org/10.1038/s41597-019-0104-8) compatible datasets. These datasets comply with the [ILAE and IFCN minimum recording standards](https://doi.org/10.1016/j.clinph.2023.01.002). They provide annotations that are [HED-SCORE](http://arxiv.org/pdf/2310.15173) compatible. The datasets are formatted to be operated by the [SzCORE seizure validation framework](https://doi.org/10.1111/epi.18113).
 
 The library provides tools to:
 
