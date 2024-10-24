@@ -17,7 +17,8 @@ with open(BIDS_LOC / "events.json", "r") as f:
     szTypes = eventsJSON["Levels"]
 
 for key, _ in szTypes.items():
-    szTypes[key] = key
+    if key != "bckg":
+        szTypes[key] = key
 
 SeizureType = enum.Enum("SeizureType", szTypes)
 
