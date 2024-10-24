@@ -2,10 +2,11 @@ import enum
 import json
 from datetime import datetime
 from importlib import resources as impresources
-from typing import TypedDict
+from typing import List, Tuple, TypedDict
 
 import numpy as np
 import pandas as pd
+from timescoring.annotations import Annotation as MaskEvents
 
 from . import bids
 
@@ -73,6 +74,36 @@ class Annotations:
 
         return annotations
 
+    @classmethod
+    def loadMask(cls, mask, fs):
+        maskEvent = MaskEvents(mask, fs)
+        return cls.loadEvents(maskEvent.events, len(mask) / fs)
+
+    @classmethod
+    def loadEvents(cls, events: List[Tuple[float, float]], duration: float):
+        annotations = cls()
+        for event in events:
+            annotation = Annotation()
+            annotation["onset"] = event[0]
+            annotation["duration"] = event[1] - event[0]
+            annotation["eventType"] = SeizureType.sz
+            annotation["confidence"] = "n/a"
+            annotation["channels"] = "n/a"
+            annotation["dateTime"] = "n/a"
+            annotation["recordingDuration"] = duration
+            annotations.events.append(annotation)
+        if len(events) == 0:
+            annotation = Annotation()
+            annotation["onset"] = 0
+            annotation["duration"] = duration
+            annotation["eventType"] = EventType.bckg
+            annotation["confidence"] = "n/a"
+            annotation["channels"] = "n/a"
+            annotation["dateTime"] = "n/a"
+            annotation["recordingDuration"] = duration
+            annotations.events.append(annotation)
+        return annotations
+
     def getEvents(self) -> list[(float, float)]:
         events = list()
         for event in self.events:
@@ -110,7 +141,10 @@ class Annotations:
                     line += "\t"
                 else:
                     line += "{}\t".format(event["channels"])
-                line += "{}\t".format(event["dateTime"].strftime("%Y-%m-%d %H:%M:%S"))
+                if isinstance(event["dateTime"], datetime):
+                    line += "{}\t".format(event["dateTime"].strftime("%Y-%m-%d %H:%M:%S"))
+                else:
+                    line += "{}\t".format(event["dateTime"])
                 line += "{:.2f}".format(event["recordingDuration"])
                 line += "\n"
                 f.write(line)
