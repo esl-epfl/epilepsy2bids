@@ -170,7 +170,9 @@ class Eeg:
                         data.append(edf.readSignal(index))
                         channels.append(edf.getLabel(index))
                     except ValueError:
-                        print(f"Missing electrode {electrode} in file {edfFile} replaced by zeros.")
+                        print(
+                            f"Missing electrode {electrode} in file {edfFile} replaced by zeros."
+                        )
                         data.append(np.zeros_like(edf.readSignal(0)))
                         channels.append(electrode)
             # Else read all channels with a fixed fs
@@ -193,6 +195,32 @@ class Eeg:
             signalHeader,
             fileHeader,
         )
+
+    @classmethod
+    def loadEdfAutoDetectMontage(cls, edfFile: str):
+        """Instantiate an Eeg object from an EDF file while auto-detecting electrodes and montage.
+
+        Args:
+            edfFile (str): path to EDF file.
+
+        Returns:
+            Eeg: returns an Eeg instance containing the data of the EDF file.
+        """
+        with pyedflib.EdfReader(edfFile) as edf:
+            channel = edf.getLabel(0)
+            edf._close()
+        if channel == Eeg.ELECTRODES_10_20[0]:
+            montage = Eeg.Montage.UNIPOLAR
+            electrodes = Eeg.ELECTRODES_10_20
+        elif channel == Eeg.BIPOLAR_DBANANA[0]:
+            montage = Eeg.Montage.BIPOLAR_DBANANA
+            electrodes = Eeg.BIPOLAR_DBANANA
+        else:
+            raise ValueError(
+                f"Unrecognized electrode: {channel}. Expected {Eeg.ELECTRODES_10_20[0]} or {Eeg.BIPOLAR_DBANANA[0]}"
+            )
+
+        return Eeg.loadEdf(edfFile, montage, electrodes)
 
     def resample(self, newFs: int):
         """Resample data to a new sampling frequency.

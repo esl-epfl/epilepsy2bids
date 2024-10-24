@@ -19,7 +19,7 @@ packages = ["src/epilepsy2bids"]
 
 [project]
 name = "epilepsy2bids"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Jonathan Dan", email="jonathan.dan@epfl.ch" },
   { name="PEDESITE" }
