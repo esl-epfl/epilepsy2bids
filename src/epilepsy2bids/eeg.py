@@ -208,7 +208,10 @@ class Eeg:
         with pyedflib.EdfReader(edfFile) as edf:
             channel = edf.getLabel(0)
             edf._close()
-        if channel == Eeg.ELECTRODES_10_20[0].upper():
+        if (
+            channel == Eeg.ELECTRODES_10_20[0].upper()
+            or channel == f"{Eeg.ELECTRODES_10_20[0].upper()}-Avg"
+        ):
             montage = Eeg.Montage.UNIPOLAR
             electrodes = Eeg.ELECTRODES_10_20
         elif channel == Eeg.BIPOLAR_DBANANA[0].upper():
