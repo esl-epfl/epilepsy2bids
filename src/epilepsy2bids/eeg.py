@@ -210,7 +210,7 @@ class Eeg:
             edf._close()
         if (
             channel == Eeg.ELECTRODES_10_20[0].upper()
-            or channel == f"{Eeg.ELECTRODES_10_20[0].upper()}-Avg"
+            or channel == f"{Eeg.ELECTRODES_10_20[0].upper()}-AVG"
         ):
             montage = Eeg.Montage.UNIPOLAR
             electrodes = Eeg.ELECTRODES_10_20
@@ -219,7 +219,7 @@ class Eeg:
             electrodes = Eeg.BIPOLAR_DBANANA
         else:
             raise ValueError(
-                f"Unrecognized electrode: {channel}. Expected {Eeg.ELECTRODES_10_20[0]} or {Eeg.BIPOLAR_DBANANA[0]}"
+                f"Unrecognized electrode: {channel}. Expected {Eeg.ELECTRODES_10_20[0]} or {Eeg.ELECTRODES_10_20[0]}-Avg or {Eeg.BIPOLAR_DBANANA[0]}"
             )
 
         return cls.loadEdf(edfFile, montage, electrodes)
