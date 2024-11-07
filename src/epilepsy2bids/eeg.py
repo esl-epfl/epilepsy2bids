@@ -209,12 +209,12 @@ class Eeg:
             channel = edf.getLabel(0)
             edf._close()
         if (
-            channel == Eeg.ELECTRODES_10_20[0].upper()
-            or channel == f"{Eeg.ELECTRODES_10_20[0].upper()}-AVG"
+            channel.upper() == Eeg.ELECTRODES_10_20[0].upper()
+            or channel.upper() == f"{Eeg.ELECTRODES_10_20[0].upper()}-AVG"
         ):
             montage = Eeg.Montage.UNIPOLAR
             electrodes = Eeg.ELECTRODES_10_20
-        elif channel == Eeg.BIPOLAR_DBANANA[0].upper():
+        elif channel.upper() == Eeg.BIPOLAR_DBANANA[0].upper():
             montage = Eeg.Montage.BIPOLAR
             electrodes = Eeg.BIPOLAR_DBANANA
         else:
