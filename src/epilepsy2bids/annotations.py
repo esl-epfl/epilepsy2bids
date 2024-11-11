@@ -53,23 +53,41 @@ class Annotations:
         annotations = cls()
         for _, row in df.iterrows():
             annotation = Annotation()
-            annotation["onset"] = float(row["onset"])
-            annotation["duration"] = float(row["duration"])
-            annotation["eventType"] = EventType[row["eventType"]]
-            if row["confidence"]:
-                annotation["confidence"] = "n/a"
-            else:
+            try:
+                annotation["onset"] = float(row["onset"])
+            except (ValueError, KeyError):
+                annotation["onset"] = "n/a"
+            try:
+                annotation["duration"] = float(row["duration"])
+            except (KeyError, ValueError):
+                annotation["duration"] = "n/a"
+            try:
+                annotation["eventType"] = EventType[row["eventType"]]
+            except KeyError:
+                annotation["eventType"] = "n/a"
+            try:
                 annotation["confidence"] = float(row["confidence"])
-            if row["channels"]:
+            except (KeyError, ValueError):
+                annotation["confidence"] = "n/a"
+            try:
+                if "," in row["channels"]:
+                    annotation["channels"] = row["channels"].split(",")
+                elif row["channels"] == "n/a":
+                    annotation["channels"] = row["channels"]
+                else:
+                    annotation["channels"] = [row["channels"]]
+            except KeyError:
                 annotation["channels"] = "n/a"
-            elif "," in row["channels"]:
-                annotation["channels"] = row["channels"].split(",")
-            else:
-                annotation["channels"] = [row["channels"]]
-            annotation["dateTime"] = datetime.strptime(
-                row["dateTime"], "%Y-%m-%d %H:%M:%S"
-            )
-            annotation["recordingDuration"] = float(row["recordingDuration"])
+            try:
+                annotation["dateTime"] = datetime.strptime(
+                    row["dateTime"], "%Y-%m-%d %H:%M:%S"
+                )
+            except (KeyError, TypeError, ValueError):
+                annotation["dateTime"] = "n/a"
+            try:
+                annotation["recordingDuration"] = float(row["recordingDuration"])
+            except (KeyError, ValueError):
+                annotation["recordingDuration"] = "n/a"
             annotations.events.append(annotation)
 
         return annotations
