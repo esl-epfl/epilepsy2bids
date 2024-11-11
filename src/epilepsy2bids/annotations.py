@@ -16,10 +16,10 @@ szTypes = dict()
 with open(BIDS_LOC / "events.json", "r") as f:
     eventsJSON = json.load(f)
     szTypes = eventsJSON["Levels"]
+    del szTypes["bckg"]
 
 for key, _ in szTypes.items():
-    if key != "bckg":
-        szTypes[key] = key
+    szTypes[key] = key
 
 SeizureType = enum.Enum("SeizureType", szTypes)
 
@@ -76,7 +76,7 @@ class Annotations:
                     annotation["channels"] = row["channels"]
                 else:
                     annotation["channels"] = [row["channels"]]
-            except KeyError:
+            except (KeyError, TypeError):
                 annotation["channels"] = "n/a"
             try:
                 annotation["dateTime"] = datetime.strptime(
