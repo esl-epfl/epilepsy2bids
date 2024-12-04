@@ -65,6 +65,7 @@ def convert(root: Path, outDir: Path):
 
     # Loop over folders
     for subject, folder in enumerate(natsorted(root.glob("PAT*", case_sensitive=False))):
+        skip = False
         exclusions = ["PAT_188", 
                     "PAT_189", 
                     "PAT_190", 
@@ -103,11 +104,19 @@ def convert(root: Path, outDir: Path):
                     "PAT_214", 
                     "PAT_215", 
                     "PAT_187",
+                    "PAT_261", # patient added in the exclusion list on the 2024-09-09, when try to visualize something on micromed --> fatal error
+                    "Pat_75", # patient added in the exclusion list on the 2024-09-13
+                    "Pat_76", # patient added in the exclusion list on the 2024-09-13
+                    "Pat_77", # patient added in the exclusion list on the 2024-09-13
                     "PAT_99"]
         for exclude in exclusions:
             if exclude == folder.name:
                 print(f"Excluding {folder.name}")
-                continue
+                skip = True
+                break
+        if skip:
+            continue
+        
         print(folder)
         # Extract subject & session ID
         subject += 1
@@ -179,11 +188,11 @@ def convert(root: Path, outDir: Path):
                 )
                 annotations.saveTsv(edfBaseName.as_posix()[:-4] + "_events.tsv")
 
-    # Build participant metadata
-    participants = {"participant_id": [],
-                    "micromed_id": []}
-    for folder in outDir.glob("sub-*"):
-        subject = os.path.split(folder)[-1]
-        participants["participant_id"].append(subject)
-        participants["micromed_id"].append(subjectID[int(subject[4:])])
-    bidsConverter.saveMetadata(participants)
+        # Build participant metadata
+        participants = {"participant_id": [],
+                        "micromed_id": []}
+        for folder in outDir.glob("sub-*"):
+            subject = os.path.split(folder)[-1]
+            participants["participant_id"].append(subject)
+            participants["micromed_id"].append(subjectID[int(subject[4:])])
+        bidsConverter.saveMetadata(participants)
