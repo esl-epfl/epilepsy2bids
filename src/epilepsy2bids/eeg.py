@@ -107,7 +107,7 @@ class Eeg:
         "equipment": "",
         "admincode": "",
         "gender": 0,
-        "recording_start_time": datetime.datetime(1970, 1, 1),
+        "startdate": datetime.datetime(1970, 1, 1),
         "birthdate": datetime.date(1970, 1, 1),
     }
 

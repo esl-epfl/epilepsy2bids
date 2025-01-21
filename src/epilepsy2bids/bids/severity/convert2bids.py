@@ -60,7 +60,7 @@ def convert(root: Path, outDir: Path):
     bidsConverter = BidsConverter(BIDS_DIR, DATASET, root, outDir)
 
     # Load raw annotations
-    dfAnnotations = preLoadAnnotations("../seizures_from_eeg.csv")
+    dfAnnotations = preLoadAnnotations("/home/dan/Documents/owncloud/epilepsy/epilepsy2bids/seizures_from_eeg.csv")
     subjectID = dict()
 
     # Loop over folders
@@ -183,7 +183,7 @@ def convert(root: Path, outDir: Path):
                 annotations = trc2events(
                     dfAnnotations,
                     str(trcFile),
-                    eeg._fileHeader["recording_start_time"],
+                    eeg._fileHeader["startdate"],
                     eeg.data.shape[1] / eeg.fs,
                 )
                 annotations.saveTsv(edfBaseName.as_posix()[:-4] + "_events.tsv")

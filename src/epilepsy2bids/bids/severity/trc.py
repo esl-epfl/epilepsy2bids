@@ -282,8 +282,8 @@ def load_Eeg_TRC(
 
     segments = list()
     for i in range(len(segments_bounds.keys())):
-        fileHeader = Eeg.DEFAULT_FILE_HEADER
-        fileHeader["recording_start_time"] = segments_bounds[f"segment_{i + 1}"][0]
+        fileHeader = Eeg.DEFAULT_FILE_HEADER.copy()
+        fileHeader["startdate"] = segments_bounds[f"segment_{i + 1}"][0].to_pydatetime()
 
         eeg = Eeg(
             recording[
@@ -293,6 +293,7 @@ def load_Eeg_TRC(
             ].T.to_numpy(),
             list(recording.keys()),
             sampling_rate,
+            fileHeader = fileHeader,
         )
         segments.append(eeg)
 
