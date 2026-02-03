@@ -1,0 +1,10 @@
+{
+  "group": {
+    "Description": "Group label derived from the source directory under v2.0.1.",
+    "Levels": {
+      "epilepsy": "Recordings under 00_epilepsy.",
+      "non-epilepsy": "TODO",
+      "unknown": "Group could not be inferred from the path."
+    }
+  }
+}

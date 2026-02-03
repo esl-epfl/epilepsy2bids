@@ -55,7 +55,7 @@ class BidsConverter:
             annotations.saveTsv(edfBaseName.as_posix()[:-4] + "_events.tsv")
 
 
-    def saveMetadata(self, participants):
+    def saveMetadata(self, participants, copy_events_json: bool = True):
         participantsDf = pd.DataFrame(participants)
         participantsDf.sort_values(by=["participant_id"], inplace=True)
         participantsDf.to_csv(self.outDir / "participants.tsv", sep="\t", index=False)
@@ -71,5 +71,6 @@ class BidsConverter:
         shutil.copy(descriptionFileName, self.outDir)
 
         # Copy Events JSON Sidecar
-        eventsFileName = self.BIDS_DIR / "events.json"
-        shutil.copy(eventsFileName, self.outDir)
+        if copy_events_json:
+            eventsFileName = self.BIDS_DIR / "events.json"
+            shutil.copy(eventsFileName, self.outDir)

@@ -1,0 +1,16 @@
+{
+  "EEGReference": "n/a",
+  "SamplingFrequency": $fs,
+  "PowerLineFrequency": "n/a",
+  "SoftwareFilters": "n/a",
+
+  "EEGChannelCount": $channels,
+  "EEGPlacementScheme": "10-20",
+  "HardwareFilters": "n/a",
+  "RecordingType": "n/a",
+  "RecordingDuration": $duration,
+
+  "TaskName": "$task",
+  "TaskDescription": "TODO",
+  "InstitutionName": "TODO"
+}
