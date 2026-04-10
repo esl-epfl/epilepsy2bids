@@ -16,6 +16,18 @@ class TestAnnotations(unittest.TestCase):
         self.assertEqual(len(annotations.getEvents()), 3)
         self.assertEqual(len(annotations.getMask(1)), 3600)
 
+    def test_getMask_empty_events_no_error(self):
+        annotations = Annotations()
+        mask = annotations.getMask(fs=256)
+        self.assertEqual(len(mask), 0)
+
+    def test_getMask_empty_events_correct_length(self):
+        annotations = Annotations()
+        annotations.recordingDuration = 3600.0
+        mask = annotations.getMask(fs=1)
+        self.assertEqual(len(mask), 3600)
+        self.assertTrue(np.all(mask == 0))
+
     def test_saveTsv(self):
         annotations = Annotations.loadTsv("tests/sample.tsv")
         annotations.saveTsv("test.tsv")

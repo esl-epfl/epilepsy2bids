@@ -46,6 +46,7 @@ class Annotation(TypedDict):
 class Annotations:
     def __init__(self):
         self.events: list[Annotation] = list()
+        self.recordingDuration: float = 0.0
 
     @classmethod
     def loadTsv(cls, filename: str):
@@ -86,6 +87,7 @@ class Annotations:
                 annotation["dateTime"] = "n/a"
             try:
                 annotation["recordingDuration"] = float(row["recordingDuration"])
+                annotations.recordingDuration = annotation["recordingDuration"]
             except (KeyError, ValueError):
                 annotation["recordingDuration"] = "n/a"
             annotations.events.append(annotation)
@@ -130,6 +132,8 @@ class Annotations:
         return events
 
     def getMask(self, fs: int) -> np.ndarray:
+        if not self.events:
+            return np.zeros(int(self.recordingDuration * fs))
         mask = np.zeros(int(self.events[0]["recordingDuration"] * fs))
         for event in self.events:
             if event["eventType"].value in SeizureType._member_names_:
