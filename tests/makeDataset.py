@@ -3,10 +3,10 @@ The content of data is white noise. The output file is named input_sample.edf
 """
 
 import argparse
-from itertools import islice
 import os
-from pathlib import Path
 import shutil
+from itertools import islice
+from pathlib import Path
 
 from makeSampleEdf import makeSample
 

@@ -6,6 +6,7 @@ import pandas as pd
 
 from ..eeg import Eeg
 
+
 class BidsConverter:
     def __init__(self, BIDS_DIR, DATASET, root, outDir, loadAnnotationsFromEdf, montage = Eeg.Montage.UNIPOLAR, electrodes = Eeg.ELECTRODES_10_20):
         self.BIDS_DIR = BIDS_DIR

@@ -1,9 +1,9 @@
-from importlib import resources as impresources
 import json
 import re
-from shutil import rmtree
 import subprocess
 import unittest
+from importlib import resources as impresources
+from shutil import rmtree
 
 from termcolor import cprint
 
