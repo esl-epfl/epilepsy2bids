@@ -260,14 +260,14 @@ def loadAnnotationsFromEdf(edfFile: str) -> Annotations:
 
     annotations = Annotations()
     for seizure in seizures:
-        annotation = Annotation()
-        annotation["onset"] = seizure[0]
-        annotation["duration"] = seizure[1] - seizure[0]
-        annotation["eventType"] = seizureType
-        annotation["confidence"] = confidence
-        annotation["channels"] = channels
-        annotation["dateTime"] = dateTime
-        annotation["recordingDuration"] = duration
-        annotations.events.append(annotation)
+        annotations.events.append(Annotation(
+            onset=seizure[0],
+            duration=seizure[1] - seizure[0],
+            eventType=seizureType,
+            confidence=confidence,
+            channels=channels,
+            dateTime=dateTime,
+            recordingDuration=duration,
+        ))
 
     return annotations

@@ -1,8 +1,9 @@
 import enum
 import json
+from dataclasses import dataclass
 from datetime import datetime
 from importlib import resources as impresources
-from typing import List, Tuple, TypedDict
+from typing import List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -31,16 +32,15 @@ EventType = enum.Enum("EventType", EVENT_TYPES)
 # Q? Expose dataFrame or getter class to get masks and annotations
 
 
-class Annotation(TypedDict):
-    onset: (
-        float  # start time of the event from the beginning of the recording, in seconds
-    )
-    duration: float  # duration of the event, in seconds
-    eventType: EventType  # type of the event
-    confidence: float  # confidence in the event label. Values are in the range [0–1]
-    channels: list[str]  # channels on which the event appears
-    dateTime: datetime  # start date time of the recording file
-    recordingDuration: float  # duration of the recording in seconds
+@dataclass
+class Annotation:
+    onset: float | None = None                  # start time from beginning of recording, in seconds
+    duration: float | None = None               # duration of the event, in seconds
+    eventType: EventType | None = None          # type of the event
+    confidence: float | None = None             # confidence in the event label [0–1]
+    channels: list[str] | None = None           # channels on which the event appears
+    dateTime: datetime | None = None            # start date time of the recording file
+    recordingDuration: float | None = None      # duration of the recording in seconds
 
 
 class Annotations:
@@ -55,41 +55,41 @@ class Annotations:
         for _, row in df.iterrows():
             annotation = Annotation()
             try:
-                annotation["onset"] = float(row["onset"])
+                annotation.onset = float(row["onset"])
             except (ValueError, KeyError):
-                annotation["onset"] = "n/a"
+                annotation.onset = None
             try:
-                annotation["duration"] = float(row["duration"])
+                annotation.duration = float(row["duration"])
             except (KeyError, ValueError):
-                annotation["duration"] = "n/a"
+                annotation.duration = None
             try:
-                annotation["eventType"] = EventType[row["eventType"]]
+                annotation.eventType = EventType[row["eventType"]]
             except KeyError:
-                annotation["eventType"] = "n/a"
+                annotation.eventType = None
             try:
-                annotation["confidence"] = float(row["confidence"])
+                annotation.confidence = float(row["confidence"])
             except (KeyError, ValueError):
-                annotation["confidence"] = "n/a"
+                annotation.confidence = None
             try:
                 if "," in row["channels"]:
-                    annotation["channels"] = row["channels"].split(",")
+                    annotation.channels = row["channels"].split(",")
                 elif row["channels"] == "n/a":
-                    annotation["channels"] = row["channels"]
+                    annotation.channels = None
                 else:
-                    annotation["channels"] = [row["channels"]]
+                    annotation.channels = [row["channels"]]
             except (KeyError, TypeError):
-                annotation["channels"] = "n/a"
+                annotation.channels = None
             try:
-                annotation["dateTime"] = datetime.strptime(
+                annotation.dateTime = datetime.strptime(
                     row["dateTime"], "%Y-%m-%d %H:%M:%S"
                 )
             except (KeyError, TypeError, ValueError):
-                annotation["dateTime"] = "n/a"
+                annotation.dateTime = None
             try:
-                annotation["recordingDuration"] = float(row["recordingDuration"])
-                annotations.recordingDuration = annotation["recordingDuration"]
+                annotation.recordingDuration = float(row["recordingDuration"])
+                annotations.recordingDuration = annotation.recordingDuration
             except (KeyError, ValueError):
-                annotation["recordingDuration"] = "n/a"
+                annotation.recordingDuration = None
             annotations.events.append(annotation)
 
         return annotations
@@ -103,43 +103,37 @@ class Annotations:
     def loadEvents(cls, events: List[Tuple[float, float]], duration: float):
         annotations = cls()
         for event in events:
-            annotation = Annotation()
-            annotation["onset"] = event[0]
-            annotation["duration"] = event[1] - event[0]
-            annotation["eventType"] = SeizureType.sz
-            annotation["confidence"] = "n/a"
-            annotation["channels"] = "n/a"
-            annotation["dateTime"] = "n/a"
-            annotation["recordingDuration"] = duration
-            annotations.events.append(annotation)
+            annotations.events.append(Annotation(
+                onset=event[0],
+                duration=event[1] - event[0],
+                eventType=SeizureType.sz,
+                recordingDuration=duration,
+            ))
         if len(events) == 0:
-            annotation = Annotation()
-            annotation["onset"] = 0
-            annotation["duration"] = duration
-            annotation["eventType"] = EventType.bckg
-            annotation["confidence"] = "n/a"
-            annotation["channels"] = "n/a"
-            annotation["dateTime"] = "n/a"
-            annotation["recordingDuration"] = duration
-            annotations.events.append(annotation)
+            annotations.events.append(Annotation(
+                onset=0,
+                duration=duration,
+                eventType=EventType.bckg,
+                recordingDuration=duration,
+            ))
         return annotations
 
     def getEvents(self) -> list[(float, float)]:
         events = list()
         for event in self.events:
-            if event["eventType"].value in SeizureType._member_names_:
-                events.append((event["onset"], event["onset"] + event["duration"]))
+            if event.eventType is not None and event.eventType.value in SeizureType._member_names_:
+                events.append((event.onset, event.onset + event.duration))
         return events
 
     def getMask(self, fs: int) -> np.ndarray:
         if not self.events:
             return np.zeros(int(self.recordingDuration * fs))
-        mask = np.zeros(int(self.events[0]["recordingDuration"] * fs))
+        mask = np.zeros(int(self.events[0].recordingDuration * fs))
         for event in self.events:
-            if event["eventType"].value in SeizureType._member_names_:
+            if event.eventType is not None and event.eventType.value in SeizureType._member_names_:
                 mask[
-                    int(event["onset"] * fs) : int(
-                        (event["onset"] + event["duration"]) * fs
+                    int(event.onset * fs) : int(
+                        (event.onset + event.duration) * fs
                     )
                 ] = 1
         return mask
@@ -151,22 +145,22 @@ class Annotations:
             f.write(line)
             for event in self.events:
                 line = ""
-                line += "{:.2f}\t".format(event["onset"])
-                line += "{:.2f}\t".format(event["duration"])
-                line += "{}\t".format(event["eventType"].value)
-                if isinstance(event["confidence"], (int, float)):
-                    line += "{:.2f}\t".format(event["confidence"])
+                line += "{:.2f}\t".format(event.onset)
+                line += "{:.2f}\t".format(event.duration)
+                line += "{}\t".format(event.eventType.value)
+                if isinstance(event.confidence, (int, float)):
+                    line += "{:.2f}\t".format(event.confidence)
                 else:
-                    line += "{}\t".format(event["confidence"])
-                if isinstance(event["channels"], (list, tuple)):
-                    line += ",".join(event["channels"])
+                    line += "n/a\t"
+                if isinstance(event.channels, (list, tuple)):
+                    line += ",".join(event.channels)
                     line += "\t"
                 else:
-                    line += "{}\t".format(event["channels"])
-                if isinstance(event["dateTime"], datetime):
-                    line += "{}\t".format(event["dateTime"].strftime("%Y-%m-%d %H:%M:%S"))
+                    line += "n/a\t"
+                if isinstance(event.dateTime, datetime):
+                    line += "{}\t".format(event.dateTime.strftime("%Y-%m-%d %H:%M:%S"))
                 else:
-                    line += "{}\t".format(event["dateTime"])
-                line += "{:.2f}".format(event["recordingDuration"])
+                    line += "n/a\t"
+                line += "{:.2f}".format(event.recordingDuration)
                 line += "\n"
                 f.write(line)
