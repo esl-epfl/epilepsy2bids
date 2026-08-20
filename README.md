@@ -48,3 +48,42 @@ In addition, the library provides the `Eeg` and `Annotation` classes that be use
 ### Adding support for a new dataset
 
 All dataset converters should implement the `convert()` method. To assist many helper functions and generic code is already available in `src.epilepsy2bids.bids.convert2bids.py`. Examples of implementation are available in the supported datasets.
+
+## TUEP: tuep2bids
+
+`tuep2bids` is a CLI converter for the TUH EEG Epilepsy (TUEP) corpus (v2.0.1). It indexes the dataset, standardizes EDF recordings (10-20 montage, 256 Hz, common-average), and writes a minimal BIDS EEG structure with participants and per-recording metadata.
+
+### Run the conversion
+
+```
+tuep2bids --input /path/to/aging/EEG/tuh_eeg_epilepsy/v2.0.1 --output /path/to/bids_out
+```
+
+### Example command
+
+```
+tuep2bids --input /data/aging/EEG/tuh_eeg_epilepsy/v2.0.1 --output /data/bids/tuep
+```
+
+### Output BIDS structure (minimal)
+
+```
+bids_out/
+  dataset_description.json
+  participants.tsv
+  participants.json
+  README
+  sub-<id>/
+    [ses-<id>/]
+      eeg/
+        sub-<id>[_ses-<id>]_task-szMonitoring_run-XX_eeg.edf
+        sub-<id>[_ses-<id>]_task-szMonitoring_run-XX_eeg.json
+        sub-<id>[_ses-<id>]_task-szMonitoring_run-XX_channels.tsv
+        sub-<id>[_ses-<id>]_task-szMonitoring_run-XX_events.tsv (only if seizures are annotated)
+```
+
+### Known limitations / TODOs
+
+- Metadata fields in `bids/tuep/eeg.json` and `dataset_description.json` still contain TODO values.
+- Seizure annotations are parsed only from `*.csv_bi` sidecars; other formats are TODO.
+- `events.tsv` is created only when seizure annotations are present; otherwise it is skipped.

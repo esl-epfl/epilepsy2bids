@@ -1,0 +1,9 @@
+{
+  "group": {
+    "Description": "Group label derived from the source directory under TUEP v2.0.1.",
+    "Levels": {
+      "epilepsy": "Recordings indexed under 00_epilepsy.",
+      "unknown": "Group could not be inferred from the source path."
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "EEGReference": "Common Average",
+  "SamplingFrequency": $fs,
+  "PowerLineFrequency": 60,
+  "SoftwareFilters": "n/a",
+
+  "EEGChannelCount": $channels,
+  "EEGPlacementScheme": "10-20",
+  "HardwareFilters": "n/a",
+  "RecordingType": "discontinuous",
+  "RecordingDuration": $duration,
+
+  "TaskName": "$task",
+  "TaskDescription": "Subjects were monitored with video-EEG at Temple University Hospital, Philadelphia, USA.",
+  "InstitutionName": "Temple University Hospital"
+}

@@ -1,0 +1,19 @@
+{
+  "onset": {
+    "Description": "Onset of the seizure event relative to the beginning of the recording.",
+    "Units": "s"
+  },
+  "duration": {
+    "Description": "Duration of the seizure event.",
+    "Units": "s"
+  },
+  "trial_type": {
+    "Description": "Type of annotated event.",
+    "Levels": {
+      "seizure": "Epileptic seizure."
+    }
+  },
+  "channels": {
+    "Description": "EEG channels associated with the annotation; n/a when no channel-specific information is available."
+  }
+}
