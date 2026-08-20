@@ -1,7 +1,18 @@
 # TUEP v2.0.1 (Epilepsy)
 
-This dataset is converted from TUEP v2.0.1 using the epilepsy2bids converter.
+This converter targets the `00_epilepsy` portion of the TUH EEG Epilepsy
+Corpus (TUEP) v2.0.1.
 
-Notes:
-- EDF files are standardized to 256 Hz and a 10-20 montage with common-average reference.
-- TODO: Confirm additional dataset-specific metadata (institution, power-line frequency, recording type).
+The conversion:
+
+- indexes EDF recordings by subject, session, and montage;
+- keeps the standard 10-20 EEG channels;
+- resamples recordings to 256 Hz;
+- applies a common-average reference;
+- writes BIDS EEG recordings and sidecars;
+- converts supported `*.csv_bi` seizure annotations to `events.tsv`.
+
+Acquisition metadata shared with the existing TUH converter includes a
+60 Hz power-line frequency and Temple University Hospital provenance.
+
+Only `*.csv_bi` seizure annotations are currently supported.

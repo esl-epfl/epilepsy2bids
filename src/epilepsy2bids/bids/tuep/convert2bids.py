@@ -1,4 +1,5 @@
 import os
+import shutil
 from importlib import resources as impresources
 from pathlib import Path
 from string import Template
@@ -57,6 +58,7 @@ def convert(root: Path, outDir: Path):
 
     grouped = _group_records(records)
     task = "szMonitoring"
+    wrote_events = False
 
     for (orig_subject, orig_session), recs in grouped.items():
         subject = subjectIdPairs[orig_subject]["subject"]
@@ -108,6 +110,7 @@ def convert(root: Path, outDir: Path):
                 events_base = Path(str(edfBaseName).replace("_eeg", "_events"))
                 events_path = events_base.with_suffix(".tsv")
                 write_events_tsv(events, events_path)
+                wrote_events = True
             else:
                 print(f"No seizure annotations found for {record.edf_path}")
 
@@ -117,3 +120,7 @@ def convert(root: Path, outDir: Path):
         participants["group"].append(data.get("group", "unknown"))
 
     bidsConverter.saveMetadata(participants, copy_events_json=False)
+
+    if wrote_events:
+        events_sidecar = DATASET / "task-szMonitoring_events.json"
+        shutil.copy(events_sidecar, outDir / events_sidecar.name)
